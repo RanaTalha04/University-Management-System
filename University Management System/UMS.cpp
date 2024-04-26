@@ -1,0 +1,560 @@
+//Libraries for database and C++
+#include <stdlib.h>
+#include <iostream>
+#include <Windows.h>
+#include <sstream>
+#include <fstream>
+#include "mysql_connection.h"
+#include "mysql_driver.h"
+#include "mysql_error.h"
+#include <cppconn/exception.h>
+#include <cppconn/prepared_statement.h>
+
+
+using namespace std;
+
+// Defining the database login data globally
+const char* host= "tcp://localhost:3306/university";
+const char* username = "root";
+const char* password = "ranamuhammadtalhashahid";
+
+//Making an administration class
+class administration
+{
+private:
+
+	int ID, Age;
+	string AName,Designation,Department,EmailID;
+
+public:
+
+	// Default Constructor
+	administration()
+	{
+		ID = 0;
+		Age = 0;
+		AName = "";
+		Designation = "";
+		Department = "";
+		EmailID = "";
+	}
+
+	//Setters Function
+	void Setid(int id)
+	{
+		ID = id;
+	}
+	void Setage(int age)
+	{
+		Age = age;
+	}
+	void Setname(string name)
+	{
+		AName = name;
+	}
+	void SetDesig(string desig)
+	{
+		Designation = desig;
+	
+	}
+	void Setdept(string dept)
+	{
+		Department = dept;
+	}
+	void Setmailid(string mailid)
+	{
+		EmailID = mailid;
+	}
+
+	// Getters Function
+	int getid(int id)
+	{
+		return id;
+	}
+
+	int getage(int age)
+	{
+		return age;
+	}
+	string getname(string name)
+	{
+		return name;
+	}
+	string getDesig(string desig)
+	{
+		return desig;
+
+	}
+	string getdept(string dept)
+	{
+		return  dept;
+	}
+	string getmailid(string mailid)
+	{
+		return mailid;
+	}
+	void Registration() {
+		string R_username, R_password;
+
+		cout << "Enter username: ";
+		cin >> R_username;
+
+		cout << "Enter password: ";
+		cin >> R_password;
+
+		fstream file("Credential.txt", ios::app);
+		if (!file.is_open()) {
+			cout << "Error: Unable to open file for writing.\n";
+		}
+
+		file << R_username << " " << R_password << endl;
+		file.close();
+
+		cout << "Registration successful!\n";
+
+	}
+
+	void Login() {
+		string username, password;
+		string stored_username, stored_password;
+		bool found = false;
+
+		cout << "Enter username: ";
+		cin >> username;
+
+		cout << "Enter password: ";
+		cin >> password;
+
+		fstream file("Credential.txt");
+		if (!file.is_open()) {
+			cerr << "Error: Unable to open file for reading.\n";
+
+		}
+
+		while (file >> stored_username >> stored_password) {
+			if (username == stored_username && password == stored_password) {
+				cout << "Logged In Successfully!\n";
+				found = true;
+				file.close();
+			}
+		}
+		if (!found)
+		{
+			cout << "Invalid username or password!\n";
+			Login();
+		}
+
+		file.close();
+	}
+
+	void insertIntoDatabase()
+	{
+		sql::Connection* conn;
+		sql::Driver* driver;
+
+		driver = get_driver_instance();
+		conn = driver->connect(host, username, password);
+		Sleep(3000);
+		system("cls");
+
+		cout << "Enter ID: ";
+		cin >> ID;
+		cout << "Enter Admin Name: ";
+		cin >> AName;
+		cout << "Enter Age: ";
+		cin >> Age;
+		cout << "Enter Designation: ";
+		cin >> Designation;
+		cout << "Enter Department: ";
+		cin >> Department;
+		cout << "Enter Email ID: ";
+		cin >> EmailID;
+		
+		sql::PreparedStatement* stmt = conn->prepareStatement("INSERT INTO administration (ID,AName,Age, Designation, Department, EmailID) VALUES (?, ?, ?, ?, ?, ?)");
+		stmt->setInt(1, ID);
+		stmt->setString(2, AName);
+		stmt->setInt(3 , Age);
+		stmt->setString(4, Designation);
+		stmt->setString(5, Department);
+		stmt->setString(6, EmailID);
+		stmt->execute();
+	
+		cout << "Record inserted Successfully" << endl;
+
+	}
+	
+	void updateIntoDatabase()
+	{
+		sql::Connection* conn;
+		sql::Driver* driver;
+
+		driver = get_driver_instance();
+		conn = driver->connect(host, username, password);
+		Sleep(3000);
+		system("cls");
+
+		int option;
+		cout << "1. ID" << endl;
+		cout << "2. Age" << endl;
+		cout << "3. Name" << endl;
+		cout << "4. Designation" << endl;
+		cout << "5. Department" << endl;
+		cout << "6. Email ID" << endl;
+
+		cout << "Enter what you want to update:";
+		cin >> option;
+
+		if (option == 1)
+		{
+			int id;
+			string name;
+
+			cout << "Enter new ID: ";
+			cin >> id;
+			cout << "Enter Name you want to change the id of: ";
+			cin >> name;
+
+			sql::PreparedStatement* stmt = conn->prepareStatement("UPDATE administration SET ID = ? Where AName = ?");
+			stmt->setInt(1, id);
+			stmt->setString(2, name);
+			stmt->execute();
+
+			cout << "Record Updated Successfully" << endl;
+
+		}
+		
+		else if (option == 2)
+		{
+			int id;
+			int age;
+
+			cout << "Enter new Age: ";
+			cin >> age;
+			cout << "Enter id of the person you want to change the data of: ";
+			cin >> id;
+
+			sql::PreparedStatement* stmt = conn->prepareStatement("UPDATE administration SET Age = ? Where ID = ?");
+			stmt->setInt(1, age);
+			stmt->setInt(2, id);
+			stmt->execute();
+
+			cout << "Record Updated Successfully" << endl;
+		}
+
+		else if (option == 3)
+		{
+			int id;
+			string name;
+
+			cout << "Enter new Name: ";
+			cin >> name;
+			cout << "Enter id of the person you want to change the data of: ";
+			cin >> id;
+
+			sql::PreparedStatement* stmt = conn->prepareStatement("UPDATE administration SET AName = ? Where ID = ?");
+			stmt->setString(1, name);
+			stmt->setInt(2, id);
+			stmt->execute();
+
+			cout << "Record Updated Successfully" << endl;
+		}
+
+		else if (option == 4)
+		{
+			int id;
+			string desig;
+
+			cout << "Enter new Designation: ";
+			cin >> desig;
+			cout << "Enter id of the person you want to change the data of: ";
+			cin >> id;
+
+			sql::PreparedStatement* stmt = conn->prepareStatement("UPDATE administration SET Designation = ? Where ID = ?");
+			stmt->setString(1, desig);
+			stmt->setInt(2, id);
+			stmt->execute();
+
+			cout << "Record Updated Successfully" << endl;
+		}
+
+		else if (option == 5)
+		{
+			int id;
+			string depart;
+
+			cout << "Enter new Department: ";
+			cin >> depart;
+			cout << "Enter id of the person you want to change the data of: ";
+			cin >> id;
+
+			sql::PreparedStatement* stmt = conn->prepareStatement("UPDATE administration SET Department = ? Where ID = ?");
+			stmt->setString(1, depart);
+			stmt->setInt(2, id);
+			stmt->execute();
+
+			cout << "Record Updated Successfully" << endl;
+		}
+
+		else if (option == 6)
+		{
+			int id;
+			string emailid;
+
+			cout << "Enter new Email Id: ";
+			cin >> emailid;
+			cout << "Enter id of the person you want to change the data of: ";
+			cin >> id;
+
+			sql::PreparedStatement* stmt = conn->prepareStatement("UPDATE administration SET EmailID = ? Where ID = ?");
+			stmt->setString(1, emailid);
+			stmt->setInt(2, id);
+			stmt->execute();
+
+			cout << "Record Updated Successfully" << endl;
+		}
+			
+		else
+		{
+			cout << "Error: unable to process" << endl;
+		}
+
+	}
+
+	void removefromDatabase()
+	{
+		sql::Connection* conn;
+		sql::Driver* driver;
+
+		driver = get_driver_instance();
+		conn = driver->connect(host, username, password);
+		Sleep(3000);
+		system("cls");
+
+		cout << "Enter ID and Name of admin you want to remove from database:" << endl;
+
+			int id;
+			string name;
+
+			cout << "Enter ID: ";
+			cin >> id;
+			cout << "Enter the name of admin: ";
+			cin >> name;
+
+			sql::PreparedStatement* stmt = conn->prepareStatement("DELETE FROM administration  Where ID = ? AND AName = ?");
+			stmt->setInt(1, id);
+			stmt->setString(2, name);
+			stmt->execute();
+
+			cout << "Record Removed Successfully" << endl;
+
+		
+	
+	}
+};
+
+
+int main()
+{
+	try {
+		
+		sql::Driver* driver;
+		sql::Connection* conn;
+
+	driver = get_driver_instance();
+	conn = driver->connect(host, username,password);
+
+	if (!conn)
+	{
+		cout << "Connection failed\n";
+	}
+	else 
+	{
+		cout << "\t\nConnection Secured.\n";
+	}
+	Sleep(3000);
+	}
+	catch (sql::SQLException& e) {
+		cout << "SQL Exception: " << e.what() << endl;
+	}
+	catch (std::runtime_error& e) {
+		cout << "Runtime Error: " << e.what() << endl;
+	}
+		
+	administration admin;
+	bool Exit = false;
+	int option;
+
+	while (!Exit)
+	{
+		system("cls");
+		cout << "\n\t\t WELCOME TO UNIVERSITY MANAGEMENT SYSTEM\n";
+		cout << "\t\t -----------------------------------------\n";
+
+		cout << "1. Administrator" << endl;
+		cout << "2. Faculty" << endl;
+		cout << "3. Student" << endl;
+		cout << "4. Exit" << endl;
+
+		cout << "\nEnter your choice: ";
+		cin >> option;
+
+		cout << "Wait, while we are processing......";
+		Sleep(3000);
+
+		if (option == 1)
+		{	
+			int val;
+			
+			system("cls");
+
+			cout << "1. Register" << endl;
+			cout << "2. Login" << endl;
+			cout << "3. Main Menu" << endl;
+			cout << "4. Exit" << endl;
+
+			cout << "\nEnter your choice: ";
+			cin >> val;
+
+			system("cls");
+
+			if (val == 1)
+			{
+				cout << "To Register enter your username and password" << endl;
+
+				admin.Registration();
+
+				cout << "Wait, while we are processing......";
+				Sleep(3000);
+				system("cls");
+				
+				int opt;
+				cout << "1. Add a new admin to database" << endl;
+				cout << "2. Update existing admin" << endl;
+				cout << "3. Remove any admin" << endl;
+				cout << "4. Main menu" << endl;
+				cout << "5. Exit" << endl;
+
+				cout << "\nEnter your choice: ";
+				cin >> opt;
+
+				cout << "Wait, while we are processing......";
+				Sleep(3000);
+				system("cls");
+
+				if (opt == 1)
+				{
+					admin.insertIntoDatabase();
+					main();
+				}
+
+				else if (opt == 2)
+				{
+					admin.updateIntoDatabase();
+					main();
+				}
+
+				else if (opt == 3)
+				{
+					admin.removefromDatabase();
+					main();
+				}
+				else if (opt == 4)
+				{
+					main();
+				}
+				else if (opt == 5)
+				{
+					exit(0);
+				}
+				
+			}
+			else if (val == 2)
+			{
+				cout << "To Login enter your username and password" << endl;
+
+				admin.Login();
+
+				cout << "Wait, while we are processing......";
+				Sleep(3000);
+				system("cls");
+
+
+				int opt;
+				cout << "1. Add a new admin to database" << endl;
+				cout << "2. Update existing admin" << endl;
+				cout << "3. Remove any admin" << endl;
+				cout << "4. Main menu" << endl;
+				cout << "5. Exit" << endl;
+
+				cout << "\nEnter your choice: ";
+				cin >> opt;
+
+				cout << "Wait, while we are processing......";
+				Sleep(3000);
+				system("cls");
+
+				if (opt == 1)
+				{
+					admin.insertIntoDatabase();
+					main();
+				}
+
+				else if (opt == 2)
+				{
+					admin.updateIntoDatabase();
+					main();
+				}
+
+				else if (opt == 3)
+				{
+					admin.removefromDatabase();
+					main();
+				}
+				else if (opt == 4)
+				{
+					main();
+				}
+				else if (opt == 5)
+				{
+					exit(0);
+				}
+				
+			}
+			else if (val == 3)
+			{
+				main();
+			}
+			else
+			{
+				exit(0);
+			}
+		}
+		else if (option == 2)
+		{
+
+		}
+		else if (option == 3)
+		{
+
+		}
+		else
+		{
+			exit(0);
+		}
+
+		Exit = true;
+
+	}
+
+
+
+
+
+
+
+
+
+
+
+	return 0;	
+}	
