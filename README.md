@@ -1,7 +1,4 @@
-Sure, here's a documentation template for your project:
-
 ---
-
 # University Management System Documentation
 
 ## Overview
@@ -58,7 +55,7 @@ The University Management System is a software application designed to streamlin
 
 2. Follow the on-screen instructions to navigate through the application's functionalities.
 
-3. Use the provided options to register new administrators, log in, perform database operations, and more.
+3. Use the provided options to register new administrators, log-in, perform database operations, and more.
 
 ## Contributing
 
@@ -67,11 +64,6 @@ Contributions to the University Management System project are welcome. Feel free
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
-
-## Acknowledgements
-
-- The University Management System project was inspired by the need for efficient administrative tools in educational institutions.
-
 ---
 
 Feel free to customize this documentation according to your project's specific details and requirements.
