@@ -35,10 +35,9 @@ CREATE TABLE ADMINISTRATION (
     Age INT NOT NULL,
     Designation VARCHAR (10),
     Department VARCHAR (10),
-    EmailID VARCHAR (20),
+    EmailID VARCHAR (30),
 	PRIMARY KEY (ID)
 );
-DROP TABLE ADministration;
 
 CREATE TABLE COURSES (
 	

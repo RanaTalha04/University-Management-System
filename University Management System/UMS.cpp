@@ -93,9 +93,13 @@ public:
 	{
 		return mailid;
 	}
+
+	// Registration Function
+
 	void Registration() {
 		string R_username, R_password;
 
+		cout << endl;
 		cout << "Enter username: ";
 		cin >> R_username;
 
@@ -114,11 +118,13 @@ public:
 
 	}
 
+	// Login Function
 	void Login() {
 		string username, password;
 		string stored_username, stored_password;
 		bool found = false;
 
+		cout << endl;
 		cout << "Enter username: ";
 		cin >> username;
 
@@ -147,6 +153,39 @@ public:
 		file.close();
 	}
 
+	// Displaying data from database
+	void displayfromDatabase()
+	{
+		sql::Connection* conn;
+		sql::Driver* driver;
+
+		driver = get_driver_instance();
+		conn = driver->connect(host, username, password);
+		Sleep(3000);
+		system("cls");
+
+		cout << "Enter ID and Name of admin you want to remove from database:" << endl;
+
+		int id;
+		string name;
+
+		cout << "Enter ID: ";
+		cin >> id;
+		cout << "Enter the name of admin: ";
+		cin >> name;
+
+		sql::PreparedStatement* stmt = conn->prepareStatement("DELETE FROM administration  Where ID = ? AND AName = ?");
+		stmt->setInt(1, id);
+		stmt->setString(2, name);
+		stmt->execute();
+
+		cout << endl;
+		cout << "Record Removed Successfully" << endl;
+		cout << endl;
+	}
+	}
+	
+	// Inserting data into database
 	void insertIntoDatabase()
 	{
 		sql::Connection* conn;
@@ -179,10 +218,12 @@ public:
 		stmt->setString(6, EmailID);
 		stmt->execute();
 	
+		cout << endl;
 		cout << "Record inserted Successfully" << endl;
-
+		cout << endl;
 	}
 	
+	// Updating data from database
 	void updateIntoDatabase()
 	{
 		sql::Connection* conn;
@@ -219,8 +260,10 @@ public:
 			stmt->setString(2, name);
 			stmt->execute();
 
+			cout << endl;
 			cout << "Record Updated Successfully" << endl;
-
+			cout << endl;
+			
 		}
 		
 		else if (option == 2)
@@ -320,6 +363,7 @@ public:
 
 	}
 
+	// Removing data from database
 	void removefromDatabase()
 	{
 		sql::Connection* conn;
@@ -345,14 +389,13 @@ public:
 			stmt->setString(2, name);
 			stmt->execute();
 
+			cout << endl;
 			cout << "Record Removed Successfully" << endl;
-
-		
-	
+			cout << endl;
 	}
 };
 
-
+// Main Menu
 int main()
 {
 	try {
@@ -386,6 +429,7 @@ int main()
 
 	while (!Exit)
 	{
+	MainMenu:
 		system("cls");
 		cout << "\n\t\t WELCOME TO UNIVERSITY MANAGEMENT SYSTEM\n";
 		cout << "\t\t -----------------------------------------\n";
@@ -398,6 +442,7 @@ int main()
 		cout << "\nEnter your choice: ";
 		cin >> option;
 
+		cout << endl;
 		cout << "Wait, while we are processing......";
 		Sleep(3000);
 
@@ -406,7 +451,8 @@ int main()
 			int val;
 			
 			system("cls");
-
+				
+			cout << endl;
 			cout << "1. Register" << endl;
 			cout << "2. Login" << endl;
 			cout << "3. Main Menu" << endl;
@@ -415,54 +461,97 @@ int main()
 			cout << "\nEnter your choice: ";
 			cin >> val;
 
+			cout << endl;
+			cout << "Wait, while we are processing......";
+			Sleep(3000);
 			system("cls");
 
 			if (val == 1)
 			{
+				cout << endl;
 				cout << "To Register enter your username and password" << endl;
 
 				admin.Registration();
 
+				cout << endl;
 				cout << "Wait, while we are processing......";
 				Sleep(3000);
 				system("cls");
 				
 				int opt;
+			ADMIN:
+
+				cout << endl;
 				cout << "1. Add a new admin to database" << endl;
 				cout << "2. Update existing admin" << endl;
 				cout << "3. Remove any admin" << endl;
-				cout << "4. Main menu" << endl;
-				cout << "5. Exit" << endl;
+				cout << "4. Show the data of all admins" << endl;
+				cout << "5. Main menu" << endl;
+				cout << "6. Exit" << endl;
 
 				cout << "\nEnter your choice: ";
 				cin >> opt;
 
+				cout << endl;
 				cout << "Wait, while we are processing......";
 				Sleep(3000);
 				system("cls");
 
 				if (opt == 1)
 				{
-					admin.insertIntoDatabase();
-					main();
+					char val;
+					do
+					{
+						admin.insertIntoDatabase();
+						cout << "You want to enter any other data?";
+						cin >> val;
+						system("cls");
+					} while (val == 'Y' || val == 'y');
+					goto ADMIN;
 				}
 
 				else if (opt == 2)
 				{
-					admin.updateIntoDatabase();
-					main();
+					char val;
+					do
+					{
+						admin.updateIntoDatabase();
+						cout << "You want to update any other data?";
+						cin >> val;
+						system("cls");
+					} while (val == 'Y' || val == 'y');
+					goto ADMIN;
 				}
 
 				else if (opt == 3)
 				{
-					admin.removefromDatabase();
-					main();
+					char val;
+					do
+					{
+						admin.removefromDatabase();
+						cout << "You want to enter any other data?";
+						cin >> val;
+						system("cls");
+					} while (val == 'Y' || val == 'y');
+					goto ADMIN;
 				}
 				else if (opt == 4)
 				{
-					main();
+					char val;
+					do
+					{
+						admin.removefromDatabase();
+						cout << "You want to enter any other data?";
+						cin >> val;
+						system("cls");
+					} while (val == 'Y' || val == 'y');
+					goto ADMIN;
 				}
 				else if (opt == 5)
+				{
+					goto MainMenu;
+				}
+				else
 				{
 					exit(0);
 				}
@@ -470,51 +559,93 @@ int main()
 			}
 			else if (val == 2)
 			{
+				cout << endl;
 				cout << "To Login enter your username and password" << endl;
 
 				admin.Login();
 
+				cout << endl;
 				cout << "Wait, while we are processing......";
 				Sleep(3000);
 				system("cls");
-
+	
+			ADMINL:
 
 				int opt;
+				cout << endl;
 				cout << "1. Add a new admin to database" << endl;
 				cout << "2. Update existing admin" << endl;
 				cout << "3. Remove any admin" << endl;
-				cout << "4. Main menu" << endl;
+				cout << "4. Show the data of all admins" << endl;
+				cout << "5. Main menu" << endl;
 				cout << "5. Exit" << endl;
 
 				cout << "\nEnter your choice: ";
 				cin >> opt;
 
+				cout << endl;
 				cout << "Wait, while we are processing......";
 				Sleep(3000);
 				system("cls");
 
 				if (opt == 1)
 				{
-					admin.insertIntoDatabase();
-					main();
+					char val;
+					do
+					{
+						admin.insertIntoDatabase();
+						cout << "You want to enter any other data?";
+						cin >> val;
+						system("cls");
+					} while (val == 'Y' || val == 'y');
+					goto ADMINL;
 				}
 
 				else if (opt == 2)
 				{
-					admin.updateIntoDatabase();
-					main();
+					char val;
+					do
+					{
+						admin.updateIntoDatabase();
+						cout << "You want to update any other data?";
+						cin >> val;
+						system("cls");
+					} while (val == 'Y' || val == 'y');
+					goto ADMINL;
 				}
 
 				else if (opt == 3)
 				{
-					admin.removefromDatabase();
-					main();
+					char val;
+					do
+					{
+						admin.removefromDatabase();
+						cout << "You want to enter any other data?";
+						cin >> val;
+						system("cls");
+					} while (val == 'Y' || val == 'y');
+					goto ADMINL;
 				}
+
 				else if (opt == 4)
 				{
-					main();
+					char val;
+					do
+					{
+						admin.removefromDatabase();
+						cout << "You want to enter any other data?";
+						cin >> val;
+						system("cls");
+					} while (val == 'Y' || val == 'y');
+					goto ADMIN;
 				}
+
 				else if (opt == 5)
+				{
+					goto MainMenu;
+				}
+			
+				else 
 				{
 					exit(0);
 				}
@@ -522,7 +653,7 @@ int main()
 			}
 			else if (val == 3)
 			{
-				main();
+				goto MainMenu;
 			}
 			else
 			{
@@ -545,16 +676,5 @@ int main()
 		Exit = true;
 
 	}
-
-
-
-
-
-
-
-
-
-
-
 	return 0;	
 }	
