@@ -60,10 +60,6 @@ The University Management System is a software application designed to streamlin
 ## Contributing
 
 Contributions to the University Management System project are welcome. Feel free to submit bug reports, feature requests, or pull requests to help improve the software.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
 ---
 
 Feel free to customize this documentation according to your project's specific details and requirements.
