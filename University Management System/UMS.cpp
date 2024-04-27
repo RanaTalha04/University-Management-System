@@ -95,7 +95,6 @@ public:
 	}
 
 	// Registration Function
-
 	void Registration() {
 		string R_username, R_password;
 
@@ -153,38 +152,6 @@ public:
 		file.close();
 	}
 
-	// Displaying data from database
-	void displayfromDatabase()
-	{
-		sql::Connection* conn;
-		sql::Driver* driver;
-
-		driver = get_driver_instance();
-		conn = driver->connect(host, username, password);
-		Sleep(3000);
-		system("cls");
-
-		cout << "Enter ID and Name of admin you want to remove from database:" << endl;
-
-		int id;
-		string name;
-
-		cout << "Enter ID: ";
-		cin >> id;
-		cout << "Enter the name of admin: ";
-		cin >> name;
-
-		sql::PreparedStatement* stmt = conn->prepareStatement("DELETE FROM administration  Where ID = ? AND AName = ?");
-		stmt->setInt(1, id);
-		stmt->setString(2, name);
-		stmt->execute();
-
-		cout << endl;
-		cout << "Record Removed Successfully" << endl;
-		cout << endl;
-	}
-	}
-	
 	// Inserting data into database
 	void insertIntoDatabase()
 	{
@@ -371,9 +338,25 @@ public:
 
 		driver = get_driver_instance();
 		conn = driver->connect(host, username, password);
-		Sleep(3000);
-		system("cls");
-
+		sql::PreparedStatement*stmt = conn->prepareStatement("SELECT * FROM administration");
+		sql::ResultSet* res = stmt->executeQuery();
+		cout << "Displaying data from database:" << endl;
+		if (res) {
+			while (res->next()) {
+				cout << "ID: " << res->getInt("ID") << endl;
+				cout << "Name: " << res->getString("AName") << endl;
+				cout << "Age: " << res->getInt("Age") << endl;
+				cout << "Designation: " << res->getString("Designation") << endl;
+				cout << "Department: " << res->getString("Department") << endl;
+				cout << "Email ID: " << res->getString("EmailID") << endl;
+				cout << endl;
+			}
+		}
+		else {
+			cout << "No data found in the database." << endl;
+		}
+		cout << "Records displayed successfully!" << endl;
+		cout << endl;
 		cout << "Enter ID and Name of admin you want to remove from database:" << endl;
 
 			int id;
@@ -384,7 +367,7 @@ public:
 			cout << "Enter the name of admin: ";
 			cin >> name;
 
-			sql::PreparedStatement* stmt = conn->prepareStatement("DELETE FROM administration  Where ID = ? AND AName = ?");
+			stmt=conn->prepareStatement("DELETE FROM administration  Where ID = ? AND AName = ?");
 			stmt->setInt(1, id);
 			stmt->setString(2, name);
 			stmt->execute();
@@ -392,6 +375,51 @@ public:
 			cout << endl;
 			cout << "Record Removed Successfully" << endl;
 			cout << endl;
+		delete res;
+	}
+
+	// Displaying data from database
+	void displayfromDatabase()
+	{
+		try {
+			sql::Connection* conn;
+			sql::Driver* driver;
+			driver = get_driver_instance();
+			conn = driver->connect(host, username, password);
+			if (!conn) {
+				cout << "Connection to the database failed." << endl;
+				return;
+			}
+			Sleep(3000);
+			cout << "Displaying data from database:" << endl;
+			sql::PreparedStatement* stmt = conn->prepareStatement("SELECT * FROM administration");
+			sql::ResultSet* res = stmt->executeQuery();
+			if (res) {
+				while (res->next()) {
+					cout << "ID: " << res->getInt("ID") << endl;
+					cout << "Name: " << res->getString("AName") << endl;
+					cout << "Age: " << res->getInt("Age") << endl;
+					cout << "Designation: " << res->getString("Designation") << endl;
+					cout << "Department: " << res->getString("Department") << endl;
+					cout << "Email ID: " << res->getString("EmailID") << endl;
+					cout << endl;
+				}
+			}
+			else {
+				cout << "No data found in the database." << endl;
+			}
+			delete res;
+			delete stmt;
+			delete conn;
+			cout << "Records displayed successfully!" << endl;
+		}
+		catch (sql::SQLException& e) {
+			cout << "SQL Exception: " << e.what() << endl;
+		}
+		catch (std::runtime_error& e) {
+			cout << "Runtime Error: " << e.what() << endl;
+		}
+
 	}
 };
 
@@ -502,6 +530,7 @@ int main()
 					char val;
 					do
 					{
+						cout <<endl;
 						admin.insertIntoDatabase();
 						cout << "You want to enter any other data?";
 						cin >> val;
@@ -515,6 +544,7 @@ int main()
 					char val;
 					do
 					{
+						cout <<endl;
 						admin.updateIntoDatabase();
 						cout << "You want to update any other data?";
 						cin >> val;
@@ -528,6 +558,8 @@ int main()
 					char val;
 					do
 					{
+						cout << endl;
+
 						admin.removefromDatabase();
 						cout << "You want to enter any other data?";
 						cin >> val;
@@ -537,15 +569,12 @@ int main()
 				}
 				else if (opt == 4)
 				{
-					char val;
-					do
-					{
-						admin.removefromDatabase();
-						cout << "You want to enter any other data?";
-						cin >> val;
-						system("cls");
-					} while (val == 'Y' || val == 'y');
+					cout << endl;
+					admin.displayfromDatabase();
+					Sleep(3000);
+					system("cls");
 					goto ADMIN;
+			
 				}
 				else if (opt == 5)
 				{
@@ -593,6 +622,7 @@ int main()
 					char val;
 					do
 					{
+						cout <<endl;
 						admin.insertIntoDatabase();
 						cout << "You want to enter any other data?";
 						cin >> val;
@@ -606,6 +636,7 @@ int main()
 					char val;
 					do
 					{
+						cout <<endl;
 						admin.updateIntoDatabase();
 						cout << "You want to update any other data?";
 						cin >> val;
@@ -614,24 +645,13 @@ int main()
 					goto ADMINL;
 				}
 
+
 				else if (opt == 3)
 				{
 					char val;
 					do
 					{
-						admin.removefromDatabase();
-						cout << "You want to enter any other data?";
-						cin >> val;
-						system("cls");
-					} while (val == 'Y' || val == 'y');
-					goto ADMINL;
-				}
-
-				else if (opt == 4)
-				{
-					char val;
-					do
-					{
+						cout <<endl;
 						admin.removefromDatabase();
 						cout << "You want to enter any other data?";
 						cin >> val;
@@ -640,6 +660,14 @@ int main()
 					goto ADMIN;
 				}
 
+				else if (opt == 4)
+				{
+					cout <<endl;
+					admin.displayfromDatabase();
+					Sleep(3000);
+					system("cls");
+					goto ADMINL;
+				}
 				else if (opt == 5)
 				{
 					goto MainMenu;
