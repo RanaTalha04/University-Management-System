@@ -603,11 +603,19 @@ int main()
 				int opt;
 				cout << endl;
 				cout << "1. Add a new admin to database" << endl;
-				cout << "2. Update existing admin" << endl;
+				cout << "2. Update existing admin data" << endl;
 				cout << "3. Remove any admin" << endl;
 				cout << "4. Show the data of all admins" << endl;
-				cout << "5. Main menu" << endl;
-				cout << "5. Exit" << endl;
+				cout << "5. Add a new Student to database" << endl;
+				cout << "6. Update existing student data" << endl;
+				cout << "7. Remove any student" << endl;
+				cout << "8. Show the data of all students" << endl;
+				cout << "9. Add a new faculty member to database" << endl;
+				cout << "10. Update existing faculty member" << endl;
+				cout << "11. Remove any faculty member" << endl;
+				cout << "12. Show the data of all faculty member" << endl;
+				cout << "13. Main menu" << endl;
+				cout << "14. Exit" << endl;
 
 				cout << "\nEnter your choice: ";
 				cin >> opt;
@@ -645,7 +653,6 @@ int main()
 					goto ADMINL;
 				}
 
-
 				else if (opt == 3)
 				{
 					char val;
@@ -668,7 +675,47 @@ int main()
 					system("cls");
 					goto ADMINL;
 				}
+
 				else if (opt == 5)
+				{
+					goto MainMenu;
+				}
+
+				else if (opt == 6)
+				{
+					goto MainMenu;
+				}
+
+				else if (opt == 7)
+				{
+					goto MainMenu;
+				}
+
+				else if (opt == 8)
+				{
+					goto MainMenu;
+				}
+
+				else if (opt == 9)
+				{
+					goto MainMenu;
+				}
+
+				else if (opt == 10)
+				{
+					goto MainMenu;
+				}
+
+				else if (opt == 11)
+				{
+					goto MainMenu;
+				}
+
+				else if (opt == 12)
+				{
+					goto MainMenu;
+				}
+				else if (opt == 13)
 				{
 					goto MainMenu;
 				}
