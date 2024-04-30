@@ -4,14 +4,14 @@ USE University;
 CREATE TABLE STUDENT (
 	
     RegNo INT NOT NULL,
-    SName VARCHAR (15),
-    FatherName VARCHAR (15),
+    SName VARCHAR (25),
+    FatherName VARCHAR (25),
     Age INT NOT NULL,
-	Department VARCHAR (10),
+	Department VARCHAR (25),
     Semester INT NOT NULL,
-    Section VARCHAR (2),
-    Grade VARCHAR (2),
-    Courses VARCHAR (10),
+    Section VARCHAR (5),
+    Grade VARCHAR (5),
+    Course VARCHAR (25),
     CGPA FLOAT,
     PRIMARY KEY (RegNo)
 );
@@ -42,10 +42,18 @@ CREATE TABLE ADMINISTRATION (
 CREATE TABLE COURSES (
 	
     CourseNo INT NOT NULL,
-    CourseName VARCHAR (20),
-    CourseInstr VARCHAR (10),
-    Department VARCHAR (10),
+    Course VARCHAR (25),
+    CourseInstr VARCHAR (25),
+    Department VARCHAR (25),
     PRIMARY KEY (CourseNo)
 );
 
+DROP TABLE student;
+DROP TABLE faculty;
+DROP TABLE courses;
+DROP TABLE administration;
+
 SELECT * FROM administration;
+SELECT * FROM faculty;
+SELECT * FROM student;
+SELECT * FROM courses;

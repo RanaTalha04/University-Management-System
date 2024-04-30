@@ -18,8 +18,279 @@ const char* host= "tcp://localhost:3306/university";
 const char* username = "root";
 const char* password = "ranamuhammadtalhashahid";
 
+// Making a student class
+
+class student
+{
+private:
+
+	int RegNo, Age, Semester;
+	string Department, SName, FatherName,Section,Grade,Courses,Instructor;
+	float CGPA;
+
+public:
+		
+	student()
+	{
+		RegNo = 0;
+		Age = 0;
+		Semester = 0;
+		Department = ""; 
+		SName = "";
+		FatherName = ""; 
+		Section = ""; 
+		Grade = "";
+		Courses = "";
+		Instructor = "";
+		CGPA = 0.0;
+	}
+
+	//Setters Function
+
+	void SetRegno(int reg)
+	{
+		RegNo = reg;
+	}
+	void Setage(int age)
+	{
+		Age = age;
+	}
+	void Setsem(int sem)
+	{
+		Semester = sem;
+	}
+	void Setdept(string dept)
+	{
+		Department = dept;
+	}
+	void Setname(string name)
+	{
+		SName = name;
+	}
+	void SetFname(string fname)
+	{
+		FatherName = fname;
+
+	}
+	void Setsec(string sec)
+	{
+		Section = sec;
+	}
+	void Setgrade(string grade)
+	{
+		Grade = grade;
+	}
+	void Setcourse(string courses)
+	{
+		Courses = courses;
+	}
+	void Setinstr(string Instr)
+	{
+		Instructor = Instr;
+	}
+	void Setcgpa(float cgpa)
+	{
+		CGPA = cgpa;
+	}
+
+	// Getters Function
+
+	int getRegno(int reg)
+	{
+		return reg;
+	}
+	int getage(int age)
+	{
+		return age;
+	}
+	string getsem(string sem)
+	{
+		return  sem;
+	}
+	string getdept(string dept)
+	{
+		return  dept;
+	}
+	string getname(string Sname)
+	{
+		return Sname;
+	}
+	string getFname(string fname)
+	{
+		return fname;
+
+	}
+	string getsec(string sec)
+	{
+		return sec;
+	}
+	string getgrade(string grade)
+	{
+		return grade;
+	}
+	string getcourse(string course)
+	{
+		return course;
+	}
+	string getInstr(string instr)
+	{
+		return instr;
+
+	}
+	float getcgpa(float cgpa)
+	{
+		return cgpa;
+	}
+	
+};
+
+// Making a faculty class
+class faculty: public student
+{
+private:
+
+	int ID, Age, Salary;
+	string Department, FName, Designation, Courses;
+	
+public:
+
+	faculty()
+	{
+		ID = 0;
+		Age = 0;
+		Salary = 0;
+		Department = "";
+		FName = "";
+		Designation = "";
+		Courses = "";
+	}
+
+	//Setters Function
+
+	void SetRegno(int id)
+	{
+		ID = id;
+	}
+	void Setage(int age)
+	{
+		Age = age;
+	}
+	void Setsem(int salary)
+	{
+		Salary = salary;
+	}
+	void Setdept(string dept)
+	{
+		Department = dept;
+	}
+	void Setname(string name)
+	{
+		FName = name;
+	}
+	void SetFname(string desig)
+	{
+		Designation = desig;
+
+	}
+	void Setcourse(string courses)
+	{
+		Courses = courses;
+	}
+	
+	// Getters Function
+
+	int getid(int id)
+	{
+		return id;
+	}
+	int getage(int age)
+	{
+		return age;
+	}
+	string getsal(string sal)
+	{
+		return  sal;
+	}
+	string getdept(string dept)
+	{
+		return  dept;
+	}
+	string getname(string fname)
+	{
+		return fname;
+	}
+	string getdesig(string desig)
+	{
+		return desig;
+
+	}
+	string getcourse(string course)
+	{
+		return course;
+	}
+};
+
+// Making a courses class
+
+class courses : public faculty,public student
+{
+private:
+
+	int CourseNo;
+	string Course, CourseInst,Department;
+
+public:
+
+	courses ()
+	{
+		CourseNo = 0;
+		Course = "";
+		CourseInst = "";
+		Department = "";
+	}
+
+	//Setters Function
+
+	void Setcourseno(int id)
+	{
+		CourseNo = id;
+	}
+	void Setcourse(string name)
+	{
+		Course = name;
+	}
+	void SetcourseInst(string courseinst)
+	{
+		CourseInst = courseinst;
+	}
+	void Setdept(string dept)
+	{
+		Department = dept;
+	}
+
+	// Getters Function
+
+	int getcourseno(int id)
+	{
+		return id;
+	}
+	string getname(string cname)
+	{
+		return cname;
+	}
+	string getcourseinst(string courseinst)
+	{
+		return courseinst;
+	}
+	string getdept(string dept)
+	{
+		return  dept;
+	}
+};
+
 //Making an administration class
-class administration
+
+class administration 
 {
 private:
 
@@ -166,13 +437,15 @@ public:
 		cout << "Enter ID: ";
 		cin >> ID;
 		cout << "Enter Admin Name: ";
-		cin >> AName;
+		cin.ignore(); // Ignore any previous newline character from the input buffer
+		getline(cin, AName);
 		cout << "Enter Age: ";
 		cin >> Age;
 		cout << "Enter Designation: ";
-		cin >> Designation;
+		getline(cin, Designation);
 		cout << "Enter Department: ";
 		cin >> Department;
+		getline(cin, Department);
 		cout << "Enter Email ID: ";
 		cin >> EmailID;
 		
@@ -220,8 +493,7 @@ public:
 			cout << "Enter new ID: ";
 			cin >> id;
 			cout << "Enter Name you want to change the id of: ";
-			cin >> name;
-
+			getline(cin, name);
 			sql::PreparedStatement* stmt = conn->prepareStatement("UPDATE administration SET ID = ? Where AName = ?");
 			stmt->setInt(1, id);
 			stmt->setString(2, name);
@@ -257,7 +529,7 @@ public:
 			string name;
 
 			cout << "Enter new Name: ";
-			cin >> name;
+			getline(cin, name);
 			cout << "Enter id of the person you want to change the data of: ";
 			cin >> id;
 
@@ -275,7 +547,7 @@ public:
 			string desig;
 
 			cout << "Enter new Designation: ";
-			cin >> desig;
+			getline(cin, desig);
 			cout << "Enter id of the person you want to change the data of: ";
 			cin >> id;
 
@@ -293,7 +565,7 @@ public:
 			string depart;
 
 			cout << "Enter new Department: ";
-			cin >> depart;
+			getline(cin, depart);
 			cout << "Enter id of the person you want to change the data of: ";
 			cin >> id;
 
@@ -365,7 +637,7 @@ public:
 			cout << "Enter ID: ";
 			cin >> id;
 			cout << "Enter the name of admin: ";
-			cin >> name;
+			getline(cin, name);
 
 			stmt=conn->prepareStatement("DELETE FROM administration  Where ID = ? AND AName = ?");
 			stmt->setInt(1, id);
@@ -421,6 +693,211 @@ public:
 		}
 
 	}
+
+	// Inserting student data into database
+	void insertstudentintodatabase()
+	{
+		try {
+			sql::Connection* conn;
+			sql::Driver* driver;
+
+			driver = get_driver_instance();
+			conn = driver->connect(host, username, password);
+			if (!conn) {
+				cout << "Connection to the database failed." << endl;
+				return;
+			}
+			Sleep(3000);
+			system("cls");
+
+			cout << "Enter Registration Number: ";
+			int RegNo;
+			cin >> RegNo;
+
+			cout << "Enter Student Name: ";
+			string name;
+			cin.ignore(); // Ignore any previous newline character from the input buffer
+			getline(cin, name);
+
+			cout << "Enter Father Name: ";
+			string fname;
+			getline(cin, fname);
+
+			cout << "Enter Age: ";
+			int age;
+			cin >> age;
+
+			cout << "Enter Department: ";
+			string department;
+			getline(cin, department);
+
+			cout << "Enter Semester: ";
+			int Sem;
+			cin >> Sem;
+
+			cout << "Enter Section: ";
+			string Sec;
+			getline(cin, Sec);
+
+			cout << "Enter Grade: ";
+			string grade;
+			getline(cin, grade);
+
+			cout << "Enter Course Name: ";
+			string course;
+			getline(cin, course);
+
+			cout << "Enter CGPA: ";
+			float cgpa;
+			cin >> cgpa;
+
+			sql::PreparedStatement* stmt = conn->prepareStatement("INSERT INTO student (RegNo, SName, FatherName,Age, Department,Semester,Section,Grade,Course,CGPA) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+			stmt->setInt(1, RegNo);
+			stmt->setString(2, name);
+			stmt->setString(3, fname);
+			stmt->setInt(4, age);
+			stmt->setString(5, department);
+			stmt->setInt(6, Sem);
+			stmt->setString(7, Sec);
+			stmt->setString(8, grade);
+			stmt->setString(9, course);
+			stmt->setDouble(10, cgpa);
+			stmt->execute();
+
+			cout << "Student data inserted successfully!" << endl;
+
+			delete stmt;
+			delete conn;
+		}
+		catch (sql::SQLException& e) {
+			cout << "SQL Exception: " << e.what() << endl;
+		}
+		catch (std::runtime_error& e) {
+			cout << "Runtime Error: " << e.what() << endl;
+		}
+
+	}
+
+	// Inserting faculty data into database
+	void insertfacultyintodatabase()
+	{
+		try {
+			sql::Connection* conn;
+			sql::Driver* driver;
+
+			driver = get_driver_instance();
+			conn = driver->connect(host, username, password);
+			if (!conn) {
+				cout << "Connection to the database failed." << endl;
+				return;
+			}
+			Sleep(3000);
+			system("cls");
+
+			cout << "Enter ID Number: ";
+			int id;
+			cin >> id;
+
+			cout << "Enter Name: ";
+			string name;
+			cin.ignore(); // Ignore any previous newline character from the input buffer
+			getline(cin, name);
+
+			cout << "Enter Age: ";
+			int age;
+			cin >> age;
+
+			cout << "Enter Designation: ";
+			string desig;
+			getline(cin, desig);
+
+			cout << "Enter Department: ";
+			string department;
+			getline(cin, department);
+
+			cout << "Enter Course: ";
+			string course;
+			getline(cin, course);
+
+			cout << "Enter Salary: ";
+			string salary;
+			getline(cin, salary);
+
+			sql::PreparedStatement* stmt = conn->prepareStatement("INSERT INTO faculty (ID, FName,Age, Designation,Department,Course,Salary) VALUES (?, ?, ?, ?, ?, ?, ?)");
+			stmt->setInt(1, id);
+			stmt->setString(2, name);
+			stmt->setInt(3, age);
+			stmt->setString(4, desig);
+			stmt->setString(5, department);
+			stmt->setString(6, course);
+			stmt->setString(7, salary);
+			stmt->execute();
+
+			cout << "Faculty data inserted successfully!" << endl;
+
+			delete stmt;
+			delete conn;
+		}
+		catch (sql::SQLException& e) {
+			cout << "SQL Exception: " << e.what() << endl;
+		}
+		catch (std::runtime_error& e) {
+			cout << "Runtime Error: " << e.what() << endl;
+		}
+	}
+	// Inserting course data into database
+	void insertCourseIntoDatabase()
+	{
+		try {
+			sql::Connection* conn;
+			sql::Driver* driver;
+
+			driver = get_driver_instance();
+			conn = driver->connect(host, username, password);
+			if (!conn) {
+				cout << "Connection to the database failed." << endl;
+				return;
+			}
+			Sleep(3000);
+			system("cls");
+
+			cout << "Enter Course Number: ";
+			int courseNo;
+			cin >> courseNo;
+
+			cout << "Enter Course Name: ";
+			string courseName;
+			cin.ignore(); // Ignore any previous newline character from the input buffer
+			getline(cin, courseName);
+
+			cout << "Enter Course Instructor: ";
+			string courseInstructor;
+			getline(cin, courseInstructor);
+
+			cout << "Enter Department: ";
+			string department;
+			getline(cin, department);
+
+			sql::PreparedStatement* stmt = conn->prepareStatement("INSERT INTO courses (CourseNo, Course, CourseInstr, Department) VALUES (?, ?, ?, ?)");
+			stmt->setInt(1, courseNo);
+			stmt->setString(2, courseName);
+			stmt->setString(3, courseInstructor);
+			stmt->setString(4, department);
+			stmt->execute();
+
+			cout << "Course inserted successfully!" << endl;
+
+			delete stmt;
+			delete conn;
+		}
+		catch (sql::SQLException& e) {
+			cout << "SQL Exception: " << e.what() << endl;
+		}
+		catch (std::runtime_error& e) {
+			cout << "Runtime Error: " << e.what() << endl;
+		}
+	}
+
 };
 
 // Main Menu
@@ -457,6 +934,7 @@ int main()
 
 	while (!Exit)
 	{
+		// Main menu
 	MainMenu:
 		system("cls");
 		cout << "\n\t\t WELCOME TO UNIVERSITY MANAGEMENT SYSTEM\n";
@@ -473,6 +951,8 @@ int main()
 		cout << endl;
 		cout << "Wait, while we are processing......";
 		Sleep(3000);
+
+		// For admin
 
 		if (option == 1)
 		{	
@@ -510,12 +990,24 @@ int main()
 			ADMIN:
 
 				cout << endl;
-				cout << "1. Add a new admin to database" << endl;
-				cout << "2. Update existing admin" << endl;
-				cout << "3. Remove any admin" << endl;
-				cout << "4. Show the data of all admins" << endl;
-				cout << "5. Main menu" << endl;
-				cout << "6. Exit" << endl;
+				cout << "1.  Add a new Admin" << endl;
+				cout << "2.  Update existing Admins" << endl;
+				cout << "3.  Remove any Admin" << endl;
+				cout << "4.  Display Admins" << endl;
+				cout << "5.  Add a new Student" << endl;
+				cout << "6.  Update existing Student" << endl;
+				cout << "7.  Remove any Student" << endl;
+				cout << "8.  Display Students" << endl;
+				cout << "9.  Add a new Faculty member" << endl;
+				cout << "10. Update existing Faculty" << endl;
+				cout << "11. Remove any Faculty" << endl;
+				cout << "12. Display Faculty" << endl;
+				cout << "13. Add a new Course " << endl;
+				cout << "14. Update existing Courses" << endl;
+				cout << "15. Remove any Courses" << endl;
+				cout << "16. Display Courses" << endl;
+				cout << "17. Main menu" << endl;
+				cout << " Exit" << endl;
 
 				cout << "\nEnter your choice: ";
 				cin >> opt;
@@ -567,6 +1059,7 @@ int main()
 					} while (val == 'Y' || val == 'y');
 					goto ADMIN;
 				}
+
 				else if (opt == 4)
 				{
 					cout << endl;
@@ -576,15 +1069,92 @@ int main()
 					goto ADMIN;
 			
 				}
+				
 				else if (opt == 5)
+				{
+					do
+					{
+						cout << endl;
+						admin.insertstudentintodatabase();
+						system("cls");
+					} while (val == 'Y' || val == 'y');
+
+					goto ADMIN;
+				}
+
+				else if (opt == 6)
 				{
 					goto MainMenu;
 				}
+
+				else if (opt == 7)
+				{
+					goto MainMenu;
+				}
+
+				else if (opt == 8)
+				{
+					goto MainMenu;
+				}
+
+				else if (opt == 9)
+				{
+					do
+					{
+						cout << endl;
+						admin.insertfacultyintodatabase();
+						system("cls");
+					} while (val == 'Y' || val == 'y');
+
+					goto ADMIN;
+				}
+
+				else if (opt == 10)
+				{
+					goto MainMenu;
+				}
+
+				else if (opt == 11)
+				{
+					goto MainMenu;
+				}
+
+				else if (opt == 12)
+				{
+					goto MainMenu;
+				}
+				else if (opt == 13)
+				{
+					do
+					{
+						cout << endl;
+						admin.insertCourseIntoDatabase();
+						system("cls");
+					} while (val == 'Y' || val == 'y');
+
+					goto ADMINL;
+				}
+				else if (opt == 14)
+				{
+					goto MainMenu;
+				}
+				else if (opt == 15)
+				{
+					goto MainMenu;
+				}
+				else if (opt == 16)
+				{
+					goto MainMenu;
+				}
+				else if (opt == 17)
+				{
+					goto MainMenu;
+				}
+
 				else
 				{
 					exit(0);
 				}
-				
 			}
 			else if (val == 2)
 			{
@@ -602,20 +1172,24 @@ int main()
 
 				int opt;
 				cout << endl;
-				cout << "1. Add a new admin to database" << endl;
-				cout << "2. Update existing admin data" << endl;
-				cout << "3. Remove any admin" << endl;
-				cout << "4. Show the data of all admins" << endl;
-				cout << "5. Add a new Student to database" << endl;
-				cout << "6. Update existing student data" << endl;
-				cout << "7. Remove any student" << endl;
-				cout << "8. Show the data of all students" << endl;
-				cout << "9. Add a new faculty member to database" << endl;
-				cout << "10. Update existing faculty member" << endl;
-				cout << "11. Remove any faculty member" << endl;
-				cout << "12. Show the data of all faculty member" << endl;
-				cout << "13. Main menu" << endl;
-				cout << "14. Exit" << endl;
+				cout << "1.  Add a new Admin" << endl;
+				cout << "2.  Update existing Admins" << endl;
+				cout << "3.  Remove any Admin" << endl;
+				cout << "4.  Display Admins" << endl;
+				cout << "5.  Add a new Student" << endl;
+				cout << "6.  Update existing Student" << endl;
+				cout << "7.  Remove any Student" << endl;
+				cout << "8.  Display Students" << endl;
+				cout << "9.  Add a new Faculty member" << endl;
+				cout << "10. Update existing Faculty" << endl;
+				cout << "11. Remove any Faculty" << endl;
+				cout << "12. Display Faculty" << endl;
+				cout << "13. Add a new Course " << endl;
+				cout << "14. Update existing Courses" << endl;
+				cout << "15. Remove any Courses" << endl;
+				cout << "16. Display Courses" << endl;
+				cout << "17. Main menu" << endl;
+				cout << " Exit" << endl;
 
 				cout << "\nEnter your choice: ";
 				cin >> opt;
@@ -678,7 +1252,14 @@ int main()
 
 				else if (opt == 5)
 				{
-					goto MainMenu;
+					do
+					{
+						cout << endl;
+						admin.insertstudentintodatabase();
+						system("cls");
+					} while (val == 'Y' || val == 'y');
+
+					goto ADMINL;
 				}
 
 				else if (opt == 6)
@@ -698,7 +1279,14 @@ int main()
 
 				else if (opt == 9)
 				{
-					goto MainMenu;
+					do
+					{
+						cout << endl;
+						admin.insertstudentintodatabase();
+						system("cls");
+					} while (val == 'Y' || val == 'y');
+
+					goto ADMINL;
 				}
 
 				else if (opt == 10)
@@ -715,11 +1303,39 @@ int main()
 				{
 					goto MainMenu;
 				}
+
 				else if (opt == 13)
+				{
+					do
+					{
+						cout << endl;
+						admin.insertCourseIntoDatabase();
+						system("cls");
+					} while (val == 'Y' || val == 'y');
+
+					goto ADMINL;
+				}
+
+				else if (opt == 14)
 				{
 					goto MainMenu;
 				}
-			
+
+				else if (opt == 15)
+				{
+					goto MainMenu;
+				}
+
+				else if (opt == 16)
+				{
+					goto MainMenu;
+				}
+
+				else if (opt == 17)
+				{
+					goto MainMenu;
+				}
+
 				else 
 				{
 					exit(0);
@@ -735,14 +1351,23 @@ int main()
 				exit(0);
 			}
 		}
+
+		// For faculty
+
 		else if (option == 2)
 		{
 
 		}
+
+		// For student
+
 		else if (option == 3)
 		{
 
 		}
+
+		// To exit
+
 		else
 		{
 			exit(0);
@@ -751,5 +1376,5 @@ int main()
 		Exit = true;
 
 	}
-	return 0;	
+	  return 0;	
 }	

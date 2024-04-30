@@ -1,8 +1,27 @@
-﻿     Creating library C:\Users\hp\OneDrive\Desktop\UMS (University Management System)\University Management System\x64\Release\University Management System.lib and object C:\Users\hp\OneDrive\Desktop\UMS (University Management System)\University Management System\x64\Release\University Management System.exp
+﻿  UMS.cpp
+C:\Users\hp\OneDrive\Desktop\UMS (University Management System)\University Management System\University Management System\UMS.cpp(235,24): warning C4584: 'courses': base-class 'student' is already a base-class of 'faculty'
+  C:\Users\hp\OneDrive\Desktop\UMS (University Management System)\University Management System\University Management System\UMS.cpp(23,7):
+  see declaration of 'student'
+  C:\Users\hp\OneDrive\Desktop\UMS (University Management System)\University Management System\University Management System\UMS.cpp(148,7):
+  see declaration of 'faculty'
+  
+C:\Users\hp\OneDrive\Desktop\UMS (University Management System)\University Management System\University Management System\UMS.cpp(293,31): warning C4584: 'administration': base-class 'student' is already a base-class of 'faculty'
+  C:\Users\hp\OneDrive\Desktop\UMS (University Management System)\University Management System\University Management System\UMS.cpp(23,7):
+  see declaration of 'student'
+  C:\Users\hp\OneDrive\Desktop\UMS (University Management System)\University Management System\University Management System\UMS.cpp(148,7):
+  see declaration of 'faculty'
+  
+C:\Users\hp\OneDrive\Desktop\UMS (University Management System)\University Management System\University Management System\UMS.cpp(293,31): warning C4584: 'administration': base-class 'faculty' is already a base-class of 'courses'
+  C:\Users\hp\OneDrive\Desktop\UMS (University Management System)\University Management System\University Management System\UMS.cpp(148,7):
+  see declaration of 'faculty'
+  C:\Users\hp\OneDrive\Desktop\UMS (University Management System)\University Management System\University Management System\UMS.cpp(235,7):
+  see declaration of 'courses'
+  
+     Creating library C:\Users\hp\OneDrive\Desktop\UMS (University Management System)\University Management System\x64\Release\University Management System.lib and object C:\Users\hp\OneDrive\Desktop\UMS (University Management System)\University Management System\x64\Release\University Management System.exp
   Generating code
-  2 of 226 functions ( 0.9%) were compiled, the rest were copied from previous compilation.
+  2 of 237 functions ( 0.8%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    5 functions had inline decision re-evaluated but remain unchanged
+    0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
 mysqlcppconn-static.lib(mysql_driver.obj) : warning LNK4099: PDB '' was not found with 'mysqlcppconn-static.lib(mysql_driver.obj)' or at ''; linking object as if no debug info
 mysqlcppconn-static.lib(mysql_connection.obj) : warning LNK4099: PDB '' was not found with 'mysqlcppconn-static.lib(mysql_connection.obj)' or at ''; linking object as if no debug info
