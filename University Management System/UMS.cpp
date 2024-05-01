@@ -439,28 +439,29 @@ public:
 		getline(cin, AName);
 		cout << "Enter Age: ";
 		cin >> Age;
+		cin.ignore();
 		cout << "Enter Designation: ";
 		getline(cin, Designation);
 		cout << "Enter Department: ";
-		cin >> Department;
-		getline(cin, Department);
+		getline(cin, Department); // Use getline for string input
 		cout << "Enter Email ID: ";
-		cin >> EmailID;
-		
+		getline(cin, EmailID); // Use getline for string input
+
 		sql::PreparedStatement* stmt = conn->prepareStatement("INSERT INTO administration (ID,AName,Age, Designation, Department, EmailID) VALUES (?, ?, ?, ?, ?, ?)");
 		stmt->setInt(1, ID);
 		stmt->setString(2, AName);
-		stmt->setInt(3 , Age);
+		stmt->setInt(3, Age);
 		stmt->setString(4, Designation);
 		stmt->setString(5, Department);
 		stmt->setString(6, EmailID);
 		stmt->execute();
-	
+
 		cout << endl;
 		cout << "Record inserted Successfully" << endl;
 		cout << endl;
 	}
-	
+
+
 	// Updating data from database
 	void updateIntoDatabase()
 	{
@@ -490,6 +491,7 @@ public:
 
 			cout << "Enter new ID: ";
 			cin >> id;
+			cin.ignore();
 			cout << "Enter Name you want to change the id of: ";
 			getline(cin, name);
 			sql::PreparedStatement* stmt = conn->prepareStatement("UPDATE administration SET ID = ? Where AName = ?");
@@ -527,6 +529,7 @@ public:
 			string name;
 
 			cout << "Enter new Name: ";
+			cin.ignore();
 			getline(cin, name);
 			cout << "Enter id of the person you want to change the data of: ";
 			cin >> id;
@@ -545,6 +548,7 @@ public:
 			string desig;
 
 			cout << "Enter new Designation: ";
+			cin.ignore();
 			getline(cin, desig);
 			cout << "Enter id of the person you want to change the data of: ";
 			cin >> id;
@@ -563,6 +567,7 @@ public:
 			string depart;
 
 			cout << "Enter new Department: ";
+			cin.ignore();
 			getline(cin, depart);
 			cout << "Enter id of the person you want to change the data of: ";
 			cin >> id;
@@ -581,7 +586,8 @@ public:
 			string emailid;
 
 			cout << "Enter new Email Id: ";
-			cin >> emailid;
+			cin.ignore();
+			getline(cin, emailid);
 			cout << "Enter id of the person you want to change the data of: ";
 			cin >> id;
 
@@ -634,6 +640,7 @@ public:
 
 			cout << "Enter ID: ";
 			cin >> id;
+			cin.ignore();
 			cout << "Enter the name of admin: ";
 			getline(cin, name);
 
@@ -712,9 +719,9 @@ public:
 			int RegNo;
 			cin >> RegNo;
 
+			cin.ignore(); // Ignore any previous newline character from the input buffer
 			cout << "Enter Student Name: ";
 			string name;
-			cin.ignore(); // Ignore any previous newline character from the input buffer
 			getline(cin, name);
 
 			cout << "Enter Father Name: ";
@@ -726,6 +733,7 @@ public:
 			cin >> age;
 
 			cout << "Enter Department: ";
+			cin.ignore();
 			string department;
 			getline(cin, department);
 
@@ -734,6 +742,7 @@ public:
 			cin >> Sem;
 
 			cout << "Enter Section: ";
+			cin.ignore();
 			string Sec;
 			getline(cin, Sec);
 
@@ -788,8 +797,8 @@ public:
 		system("cls");
 
 		int option;
-		cout << "1. RegNo" << endl;
-		cout << "2. SName" << endl;
+		cout << "1. Reg No" << endl;
+		cout << "2. Student Name" << endl;
 		cout << "3. Father Name" << endl;
 		cout << "4. Age" << endl;
 		cout << "5. Department" << endl;
@@ -810,6 +819,7 @@ public:
 			cout << "Enter new RegNo: ";
 			cin >> id;
 			cout << "Enter Name you want to change the id of: ";
+			cin.ignore();
 			getline(cin, name);
 
 			sql::PreparedStatement* stmt = conn->prepareStatement("UPDATE student SET RegNo = ? Where SName = ?");
@@ -828,7 +838,8 @@ public:
 			string name;
 
 			cout << "Enter new Name: ";
-			cin >> name;
+			cin.ignore();
+			getline(cin, name);
 			cout << "Enter RegNo of the person you want to change the data of: ";
 			cin >> id;
 
@@ -845,6 +856,7 @@ public:
 			string name;
 
 			cout << "Enter Father Name: ";
+			cin.ignore();
 			getline(cin, name);
 			cout << "Enter RegNo of the person you want to change the data of: ";
 			cin >> id;
@@ -879,6 +891,7 @@ public:
 			string depart;
 
 			cout << "Enter new Department: ";
+			cin.ignore();
 			getline(cin, depart);
 			cout << "Enter RegNo of the person you want to change the data of: ";
 			cin >> id;
@@ -913,7 +926,8 @@ public:
 			string section;
 
 			cout << "Enter new Section: ";
-			cin >> section;
+			cin.ignore();
+			getline(cin,section);
 			cout << "Enter RegNo of the person you want to change the data of: ";
 			cin >> id;
 
@@ -930,7 +944,8 @@ public:
 			string grade;
 
 			cout << "Enter new Grade: ";
-			cin >> grade;
+			cin.ignore();
+			getline(cin, grade);
 			cout << "Enter RegNo of the person you want to change the data of: ";
 			cin >> id;
 
@@ -947,11 +962,12 @@ public:
 			string course;
 
 			cout << "Enter new Course Name: ";
-			cin >> course;
+			cin.ignore();
+			getline(cin , course);
 			cout << "Enter RegNo of the person you want to change the data of: ";
 			cin >> id;
 
-			sql::PreparedStatement* stmt = conn->prepareStatement("UPDATE student SET Course Name = ? Where RegNo = ?");
+			sql::PreparedStatement* stmt = conn->prepareStatement("UPDATE student SET Course = ? Where RegNo = ?");
 			stmt->setString(1, course);
 			stmt->setInt(2, id);
 			stmt->execute();
@@ -995,7 +1011,7 @@ public:
 		}
 		Sleep(3000);
 		cout << "Displaying data from database:" << endl;
-		sql::PreparedStatement* stmt = conn->prepareStatement("SELECT * FROM administration");
+		sql::PreparedStatement* stmt = conn->prepareStatement("SELECT * FROM student");
 		sql::ResultSet* res = stmt->executeQuery();
 		if (res) {
 			while (res->next()) {
@@ -1017,17 +1033,18 @@ public:
 		}
 		cout << "Records displayed successfully!" << endl;
 		cout << endl;
-		cout << "Enter ID and Name of admin you want to remove from database:" << endl;
+		cout << "Enter Reg No and Name of student you want to remove from database:" << endl;
 
 		int id;
 		string name;
 
-		cout << "Enter ID: ";
+		cout << "Enter RegNo: ";
 		cin >> id;
-		cout << "Enter the name of admin: ";
+		cout << "Enter the name of student: ";
+		cin.ignore();
 		getline(cin, name);
 
-		stmt = conn->prepareStatement("DELETE FROM administration  Where RegNo = ? AND SName = ?");
+		stmt = conn->prepareStatement("DELETE FROM student  Where RegNo = ? AND SName = ?");
 		stmt->setInt(1, id);
 		stmt->setString(2, name);
 		stmt->execute();
@@ -1116,6 +1133,7 @@ public:
 			cin >> age;
 
 			cout << "Enter Designation: ";
+			cin.ignore();
 			string desig;
 			getline(cin, desig);
 
@@ -1128,8 +1146,8 @@ public:
 			getline(cin, course);
 
 			cout << "Enter Salary: ";
-			string salary;
-			getline(cin, salary);
+			int salary;
+			cin >> salary;
 
 			sql::PreparedStatement* stmt = conn->prepareStatement("INSERT INTO faculty (ID, FName,Age, Designation,Department,Course,Salary) VALUES (?, ?, ?, ?, ?, ?, ?)");
 			stmt->setInt(1, id);
@@ -1138,7 +1156,7 @@ public:
 			stmt->setString(4, desig);
 			stmt->setString(5, department);
 			stmt->setString(6, course);
-			stmt->setString(7, salary);
+			stmt->setInt(7, salary);
 			stmt->execute();
 
 			cout << "Faculty data inserted successfully!" << endl;
@@ -1167,8 +1185,8 @@ public:
 
 		int option;
 		cout << "1. ID" << endl;
-		cout << "2. Name" << endl;
-		cout << "3. Age" << endl;
+		cout << "2. Age" << endl;
+		cout << "3. Name" << endl;
 		cout << "4. Designation" << endl;
 		cout << "5. Department" << endl;
 		cout << "6. Course" << endl;
@@ -1185,6 +1203,7 @@ public:
 			cout << "Enter new ID: ";
 			cin >> id;
 			cout << "Enter Name you want to change the id of: ";
+			cin.ignore();
 			getline(cin, name);
 			sql::PreparedStatement* stmt = conn->prepareStatement("UPDATE faculty SET ID = ? Where FName = ?");
 			stmt->setInt(1, id);
@@ -1221,6 +1240,7 @@ public:
 			string name;
 
 			cout << "Enter new Name: ";
+			cin.ignore();
 			getline(cin, name);
 			cout << "Enter id of the person you want to change the data of: ";
 			cin >> id;
@@ -1239,6 +1259,7 @@ public:
 			string desig;
 
 			cout << "Enter new Designation: ";
+			cin.ignore();
 			getline(cin, desig);
 			cout << "Enter id of the person you want to change the data of: ";
 			cin >> id;
@@ -1256,7 +1277,7 @@ public:
 			int id;
 			string depart;
 
-			cout << "Enter new Department: ";
+			cout << "Enter new Department: ";;
 			getline(cin, depart);
 			cout << "Enter id of the person you want to change the data of: ";
 			cin >> id;
@@ -1275,6 +1296,7 @@ public:
 			string course;
 
 			cout << "Enter new Course: ";
+			cin.ignore();
 			cin >> course;
 			cout << "Enter id of the person you want to change the data of: ";
 			cin >> id;
@@ -1330,11 +1352,11 @@ public:
 		if (res) {
 			while (res->next()) {
 				cout << "ID: " << res->getInt("ID") << endl;
-				cout << "Faculty Name: " << res->getString("FName") << endl;
+				cout << "Name: " << res->getString("FName") << endl;
 				cout << "Age: " << res->getInt("Age") << endl;
 				cout << "Designation: " << res->getString("Designation") << endl;
 				cout << "Department: " << res->getString("Department") << endl;
-				cout << "Course Name: " << res->getString("Course") << endl;
+				cout << "Course: " << res->getString("Course") << endl;
 				cout << "Salary: " << res->getInt("Salary") << endl;
 				cout << endl;
 			}
@@ -1344,14 +1366,15 @@ public:
 		}
 		cout << "Records displayed successfully!" << endl;
 		cout << endl;
-		cout << "Enter ID and Name of admin you want to remove from database:" << endl;
+		cout << "Enter ID and Name of faculty member you want to remove from database:" << endl;
 
 		int id;
 		string name;
 
 		cout << "Enter ID: ";
 		cin >> id;
-		cout << "Enter the name of admin: ";
+		cout << "Enter the name of faculty: ";
+		cin.ignore();
 		getline(cin, name);
 
 		stmt = conn->prepareStatement("DELETE FROM faculty  Where ID = ? AND FName = ?");
@@ -1490,9 +1513,10 @@ public:
 
 			cout << "Enter new Coures No: ";
 			cin >> id;
-			cout << "Enter Coures name you want to change the course number of: ";
+			cin.ignore();
+			cout << "Enter Course name you want to change the course number of: ";
 			getline(cin, name);
-			sql::PreparedStatement* stmt = conn->prepareStatement("UPDATE Courses SET CouresNo = ? Where Course = ?");
+			sql::PreparedStatement* stmt = conn->prepareStatement("UPDATE Courses SET CourseNo = ? Where Course = ?");
 			stmt->setInt(1, id);
 			stmt->setString(2, name);
 			stmt->execute();
@@ -1509,7 +1533,8 @@ public:
 			string name;
 
 			cout << "Enter new Course Name: ";
-			cin >> name;
+			cin.ignore();
+			getline(cin , name); 
 			cout << "Enter course no you want to change the data of: ";
 			cin >> id;
 
@@ -1527,6 +1552,7 @@ public:
 			string name;
 
 			cout << "Enter new Course instructor name: ";
+			cin.ignore();
 			getline(cin, name);
 			cout << "Enter course no you want to change the data of: ";
 			cin >> id;
@@ -1545,6 +1571,7 @@ public:
 			string depart;
 
 			cout << "Enter new Department: ";
+			cin.ignore();
 			getline(cin, depart);
 			cout << "Enter Course No you want to change the data of: ";
 			cin >> id;
@@ -1591,9 +1618,6 @@ public:
 			else {
 				cout << "No data found in the database." << endl;
 			}
-			delete res;
-			delete stmt;
-			delete conn;
 			cout << "Records displayed successfully!" << endl;
 
 		cout << "Enter Course No and Name of course you want to remove from database:" << endl;
@@ -1604,9 +1628,10 @@ public:
 		cout << "Enter Course No: ";
 		cin >> id;
 		cout << "Enter the Course name: ";
+		cin.ignore();
 		getline(cin, name);
 
-		stmt = conn->prepareStatement("DELETE FROM courses  Where CourseNo = ? AND Course = ?");
+		stmt = conn->prepareStatement("DELETE FROM courses Where CourseNo = ? AND Course = ?");
 		stmt->setInt(1, id);
 		stmt->setString(2, name);
 		stmt->execute();
@@ -1735,6 +1760,7 @@ int main()
 			Sleep(3000);
 			system("cls");
 
+			// After Registration
 			if (val == 1)
 			{
 				cout << endl;
@@ -1973,6 +1999,8 @@ int main()
 					exit(0);
 				}
 			}
+
+			// After Login
 			else if (val == 2)
 			{
 				cout << endl;
@@ -2084,7 +2112,17 @@ int main()
 
 				else if (opt == 6)
 				{
-					goto MainMenu;
+					char val;
+					do
+					{
+						cout << endl;
+						admin.updatedtudentIntoDatabase();
+						cout << "You want to update any other data?";
+						cin >> val;
+						system("cls");
+					} while (val == 'Y' || val == 'y');
+
+					goto ADMINL;
 				}
 
 				else if (opt == 7)
@@ -2128,7 +2166,17 @@ int main()
 
 				else if (opt == 10)
 				{
-					goto MainMenu;
+					char val;
+					do
+					{
+						cout << endl;
+						admin.updatefacultyIntoDatabase();
+						cout << "You want to update any other data?";
+						cin >> val;
+						system("cls");
+					} while (val == 'Y' || val == 'y');
+
+					goto ADMINL;
 				}
 
 				else if (opt == 11)
@@ -2137,7 +2185,7 @@ int main()
 					do
 					{
 						cout << endl;
-						admin.removefromDatabase();
+						admin.removefacultyfromDatabase();
 						cout << "You want to remove any other data?";
 						cin >> val;
 						system("cls");
@@ -2171,7 +2219,17 @@ int main()
 
 				else if (opt == 14)
 				{
-					goto MainMenu;
+					char val;
+					do
+					{
+						cout << endl;
+						admin.updatecourseIntoDatabase();
+						cout << "You want to update any other data?";
+						cin >> val;
+						system("cls");
+					} while (val == 'Y' || val == 'y');
+
+					goto ADMINL;
 				}
 
 				else if (opt == 15)
@@ -2209,6 +2267,8 @@ int main()
 				}
 				
 			}
+
+			// Main Menu
 			else if (val == 3)
 			{
 				goto MainMenu;
@@ -2221,21 +2281,18 @@ int main()
 		}
 
 		// For faculty
-
 		else if (option == 2)
 		{
 
 		}
 
 		// For student
-
 		else if (option == 3)
 		{
 
 		}
 
 		// To exit
-
 		else
 		{
 			exit(0);

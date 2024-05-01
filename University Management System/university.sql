@@ -21,9 +21,9 @@ CREATE TABLE FACULTY (
     ID INT NOT NULL,
     FName VARCHAR (15),
     Age INT NOT NULL,
-    Designation VARCHAR (10),
-    Department VARCHAR (10),
-    Course VARCHAR (10),
+    Designation VARCHAR (20),
+    Department VARCHAR (20),
+    Course VARCHAR (20),
     Salary INT NOT NULL,
 	PRIMARY KEY (ID)
 );
@@ -33,8 +33,8 @@ CREATE TABLE ADMINISTRATION (
     ID INT NOT NULL,
     AName VARCHAR (15),
     Age INT NOT NULL,
-    Designation VARCHAR (10),
-    Department VARCHAR (10),
+    Designation VARCHAR (20),
+    Department VARCHAR (20),
     EmailID VARCHAR (30),
 	PRIMARY KEY (ID)
 );
