@@ -614,7 +614,7 @@ public:
 			}
 			Sleep(3000);
 			cout << "Displaying data from database:" << endl;
-			sql::PreparedStatement* stmt = conn->prepareStatement("SELECT * FROM administration");
+			sql::PreparedStatement* stmt = conn->prepareStatement("SELECT * FROM student");
 			sql::ResultSet* res = stmt->executeQuery();
 			if (res) {
 				while (res->next()) {
@@ -2949,7 +2949,7 @@ int main()
 						cout << endl;
 						fac.displaystudentfromDatabase();
 						Sleep(3000);
-						cout << "You want to Continue?";
+						cout << "You want to Repeat?";
 						cin >> val;
 						system("cls");
 					} while (val == 'Y' || val == 'y');
@@ -2964,7 +2964,7 @@ int main()
 						cout << endl;
 						fac.displayfacultyfromDatabase();
 						Sleep(3000);
-						cout << "You want to Continue?";
+						cout << "You want to Repeat?";
 						cin >> val;
 						system("cls");
 					} while (val == 'Y' || val == 'y');
@@ -2977,9 +2977,9 @@ int main()
 					do
 					{
 						cout << endl;
-						fac.displayfacultyfromDatabase();
+						fac.displaycoursefromDatabase();
 						Sleep(3000);
-						cout << "You want to Continue?";
+						cout << "You want to Repeat?";
 						cin >> val;
 						system("cls");
 					} while (val == 'Y' || val == 'y');
@@ -2994,7 +2994,7 @@ int main()
 						cout << endl;
 						fac.filterbyGrade();
 						Sleep(3000);
-						cout << "Do you want to repeat?";
+						cout << "Do you want to Repeat?";
 						cin >> val;
 						system("cls");
 					} while (val == 'Y' || val == 'y');
@@ -3008,7 +3008,7 @@ int main()
 						cout << endl;
 						fac.filterbyCourse();
 						Sleep(3000);
-						cout << "Do you want to repeat?";
+						cout << "Do you want to Repeat?";
 						cin >> val;
 						system("cls");
 					} while (val == 'Y' || val == 'y');
@@ -3022,7 +3022,7 @@ int main()
 						cout << endl;
 						fac.filterInstructorbydepart();
 						Sleep(3000);
-						cout << "Do you want to repeat?";
+						cout << "Do you want to Repeat?";
 						cin >> val;
 						system("cls");
 					} while (val == 'Y' || val == 'y');
@@ -3082,7 +3082,7 @@ int main()
 						cout << endl;
 						fac.displaystudentfromDatabase();
 						Sleep(3000);
-						cout << "You want to Continue?";
+						cout << "You want to Repeat?";
 						cin >> val;
 						system("cls");
 					} while (val == 'Y' || val == 'y');
@@ -3097,7 +3097,7 @@ int main()
 						cout << endl;
 						fac.displayfacultyfromDatabase();
 						Sleep(3000);
-						cout << "You want to Continue?";
+						cout << "You want to Repeat?";
 						cin >> val;
 						system("cls");
 					} while (val == 'Y' || val == 'y');
@@ -3113,7 +3113,7 @@ int main()
 						cout << endl;
 						fac.displaycoursefromDatabase();
 						Sleep(3000);
-						cout << "You want to Continue?";
+						cout << "You want to Repeat?";
 						cin >> val;
 						system("cls");
 					} while (val == 'Y' || val == 'y');
@@ -3284,7 +3284,7 @@ int main()
 						cout << endl;
 						std.displaycoursefromDatabase();
 						Sleep(3000);
-						cout << "Do you want to repeat?";
+						cout << "Do you want to Repeat?";
 						cin >> val;
 						system("cls");
 					} while (val == 'Y' || val == 'y');
@@ -3299,7 +3299,7 @@ int main()
 						cout << endl;
 						std.displayGrades();
 						Sleep(3000);
-						cout << "Do you want to repeat?";
+						cout << "Do you want to Repeat?";
 						cin >> val;
 						system("cls");
 					} while (val == 'Y' || val == 'y');
@@ -3313,7 +3313,7 @@ int main()
 						cout << endl;
 						std.filterbyDepartment();
 						Sleep(3000);
-						cout << "Do you want to repeat?";
+						cout << "Do you want to Repeat?";
 						cin >> val;
 						system("cls");
 					} while (val == 'Y' || val == 'y');
@@ -3327,7 +3327,7 @@ int main()
 						cout << endl;
 						std.displayenrolledcourse();
 						Sleep(3000);
-						cout << "Do you want to repeat?";
+						cout << "Do you want to Repeat?";
 						cin >> val;
 						system("cls");
 					} while (val == 'Y' || val == 'y');
@@ -3388,7 +3388,7 @@ int main()
 						cout << endl;
 						std.displaystudentfromDatabase();
 						Sleep(3000);
-						cout << "Do you want to repeat?";
+						cout << "Do you want to Repeat?";
 						cin >> val;
 						system("cls");
 					} while (val == 'Y' || val == 'y');
@@ -3404,7 +3404,7 @@ int main()
 						cout << endl;
 						std.displayfacultyfromDatabase();
 						Sleep(3000);
-						cout << "Do you want to repeat?";
+						cout << "Do you want to Repeat?";
 						cin >> val;
 						system("cls");
 					} while (val == 'Y' || val == 'y');
@@ -3420,7 +3420,7 @@ int main()
 						cout << endl;
 						std.displaycoursefromDatabase();
 						Sleep(3000);
-						cout << "Do you want to repeat?";
+						cout << "Do you want to Repeat?";
 						cin >> val;
 						system("cls");
 					} while (val == 'Y' || val == 'y');
@@ -3436,7 +3436,7 @@ int main()
 						cout << endl;
 						std.displayGrades();
 						Sleep(3000);
-						cout << "Do you want to repeat?";
+						cout << "Do you want to Repeat?";
 						cin >> val;
 						system("cls");
 					} while (val == 'Y' || val == 'y');
@@ -3450,7 +3450,7 @@ int main()
 						cout << endl;
 						std.filterbyDepartment();
 						Sleep(3000);
-						cout << "Do you want to repeat?";
+						cout << "Do you want to Repeat?";
 						cin >> val;
 						system("cls");
 					} while (val == 'Y' || val == 'y');
@@ -3464,7 +3464,7 @@ int main()
 						cout << endl;
 						std.displayenrolledcourse();
 						Sleep(3000);
-						cout << "Do you want to repeat?";
+						cout << "Do you want to Repeat?";
 						cin >> val;
 						system("cls");
 					} while (val == 'Y' || val == 'y');
