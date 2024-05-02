@@ -25,20 +25,20 @@ class student
 private:
 
 	int RegNo, Age, Semester;
-	string Department, SName, FatherName,Section,Grade,Courses,Instructor;
+	string Department, SName, FatherName, Section, Grade, Courses, Instructor;
 	float CGPA;
 
 public:
-		
+
 	student()
 	{
 		RegNo = 0;
 		Age = 0;
 		Semester = 0;
-		Department = ""; 
+		Department = "";
 		SName = "";
-		FatherName = ""; 
-		Section = ""; 
+		FatherName = "";
+		Section = "";
 		Grade = "";
 		Courses = "";
 		Instructor = "";
@@ -141,6 +141,319 @@ public:
 	{
 		return cgpa;
 	}
+
+
+	// Registration Function
+	void Registration()
+	{
+		string R_username, R_password;
+
+		cout << endl;
+		cout << "Enter username: ";
+		cin >> R_username;
+
+		cout << "Enter password: ";
+		cin >> R_password;
+
+		fstream file("studentCredential.txt", ios::app);
+		if (!file.is_open()) {
+			cout << "Error: Unable to open file for writing.\n";
+		}
+
+		file << R_username << " " << R_password << endl;
+		file.close();
+
+		cout << "Registration successful!\n";
+
+	}
+
+	// Login Function
+	void Login() {
+		string username, password;
+		string stored_username, stored_password;
+		bool found = false;
+
+		cout << endl;
+		cout << "Enter username: ";
+		cin >> username;
+
+		cout << "Enter password: ";
+		cin >> password;
+
+		fstream file("studentCredential.txt");
+		if (!file.is_open()) {
+			cerr << "Error: Unable to open file for reading.\n";
+
+		}
+
+		while (file >> stored_username >> stored_password) {
+			if (username == stored_username && password == stored_password) {
+				cout << "Logged In Successfully!\n";
+				found = true;
+				file.close();
+			}
+		}
+		if (!found)
+		{
+			cout << "Invalid username or password!\n";
+			Login();
+		}
+
+		file.close();
+	}
+
+	// Displaying Student data
+	void displaystudentfromDatabase()
+	{
+		try {
+			sql::Connection* conn;
+			sql::Driver* driver;
+			driver = get_driver_instance();
+			conn = driver->connect(host, username, password);
+			if (!conn) {
+				cout << "Connection to the database failed." << endl;
+				return;
+			}
+			Sleep(3000);
+			cout << "Displaying data from database:" << endl;
+			sql::PreparedStatement* stmt = conn->prepareStatement("SELECT * FROM Student");
+			sql::ResultSet* res = stmt->executeQuery();
+			if (res) {
+				while (res->next()) {
+					cout << "Reg NO: " << res->getInt("RegNo") << endl;
+					cout << "Name: " << res->getString("SName") << endl;
+					cout << "Father Name: " << res->getString("FatherName") << endl;
+					cout << "Age: " << res->getInt("Age") << endl;
+					cout << "Department: " << res->getString("Department") << endl;
+					cout << "Semester: " << res->getInt("Semester") << endl;
+					cout << "Section: " << res->getString("Section") << endl;
+					cout << "Grade: " << res->getString("Grade") << endl;
+					cout << "Course: " << res->getString("Course") << endl;
+					cout << "CGPA: " << res->getString("CGPA") << endl;
+					cout << endl;
+				}
+			}
+			else {
+				cout << "No data found in the database." << endl;
+			}
+			delete res;
+			delete stmt;
+			delete conn;
+			cout << "Records displayed successfully!" << endl;
+		}
+		catch (sql::SQLException& e) {
+			cout << "SQL Exception: " << e.what() << endl;
+		}
+		catch (std::runtime_error& e) {
+			cout << "Runtime Error: " << e.what() << endl;
+		}
+
+	}
+
+	// Displaying Faculty data
+	void displayfacultyfromDatabase()
+	{
+		try {
+			sql::Connection* conn;
+			sql::Driver* driver;
+			driver = get_driver_instance();
+			conn = driver->connect(host, username, password);
+			if (!conn) {
+				cout << "Connection to the database failed." << endl;
+				return;
+			}
+			Sleep(3000);
+			cout << "Displaying data from database:" << endl;
+			sql::PreparedStatement* stmt = conn->prepareStatement("SELECT * FROM faculty");
+			sql::ResultSet* res = stmt->executeQuery();
+			if (res) {
+				while (res->next()) {
+					cout << "ID: " << res->getInt("ID") << endl;
+					cout << "Faculty Name: " << res->getString("FName") << endl;
+					cout << "Age: " << res->getInt("Age") << endl;
+					cout << "Designation: " << res->getString("Designation") << endl;
+					cout << "Department: " << res->getString("Department") << endl;
+					cout << "Course Name: " << res->getString("Course") << endl;
+					cout << "Salary: " << res->getInt("Salary") << endl;
+					cout << endl;
+				}
+			}
+			else {
+				cout << "No data found in the database." << endl;
+			}
+			delete res;
+			delete stmt;
+			delete conn;
+			cout << "Records displayed successfully!" << endl;
+		}
+		catch (sql::SQLException& e) {
+			cout << "SQL Exception: " << e.what() << endl;
+		}
+		catch (std::runtime_error& e) {
+			cout << "Runtime Error: " << e.what() << endl;
+		}
+
+	}
+
+	// Displaying Courses Data
+	void displaycoursefromDatabase()
+	{
+		try {
+			sql::Connection* conn;
+			sql::Driver* driver;
+			driver = get_driver_instance();
+			conn = driver->connect(host, username, password);
+			if (!conn) {
+				cout << "Connection to the database failed." << endl;
+				return;
+			}
+			Sleep(3000);
+			cout << "Displaying data from database:" << endl;
+			sql::PreparedStatement* stmt = conn->prepareStatement("SELECT * FROM Courses");
+			sql::ResultSet* res = stmt->executeQuery();
+			if (res) {
+				while (res->next()) {
+					cout << "Course No: " << res->getInt("CourseNo") << endl;
+					cout << "Course Name: " << res->getString("Course") << endl;
+					cout << "Course Instructor: " << res->getInt("CourseInstr") << endl;
+					cout << "Department: " << res->getString("Department") << endl;
+					cout << endl;
+				}
+			}
+			else {
+				cout << "No data found in the database." << endl;
+			}
+			delete res;
+			delete stmt;
+			delete conn;
+			cout << "Records displayed successfully!" << endl;
+		}
+		catch (sql::SQLException& e) {
+			cout << "SQL Exception: " << e.what() << endl;
+		}
+		catch (std::runtime_error& e) {
+			cout << "Runtime Error: " << e.what() << endl;
+		}
+
+	}
+
+	// Display Grades
+	void displayGrades()
+	{
+			sql::Connection* conn;
+			sql::Driver* driver;
+			driver = get_driver_instance();
+			conn = driver->connect(host, username, password);
+			if (!conn) {
+				cout << "Connection to the database failed." << endl;
+				return;
+			}
+			Sleep(3000);
+
+			cout << " To display Name filtered by Grade " << endl;
+			string grade;
+			cout << endl;
+			cout << "Enter Grade (only alphabet): ";
+			cin.ignore();
+			getline(cin, grade);
+
+			sql::PreparedStatement* stmt = conn->prepareStatement("SELECT SName FROM Student WHERE Grade = ?");
+			stmt->setString(1,grade);
+			sql::ResultSet* res = stmt->executeQuery();
+			if (res) {
+				while (res->next()) {		
+					cout << "Name: " << res->getString("SName") << endl;
+					cout << endl;
+				}
+			}
+			else {
+				cout << "No data found in the database." << endl;
+			}
+			cout << "Data displayed successfully" << endl;
+		
+		delete res;
+		delete stmt;
+		delete conn;
+	}
+
+	// Filter by Department
+	void filterbyDepartment()
+	{
+		sql::Connection* conn;
+		sql::Driver* driver;
+		driver = get_driver_instance();
+		conn = driver->connect(host, username, password);
+		if (!conn) {
+			cout << "Connection to the database failed." << endl;
+			return;
+		}
+		Sleep(3000);
+
+		cout << " To display Name filtered by department" << endl;
+		string depart;
+		cout << endl;
+		cout << "Enter Department name: ";
+		cin.ignore();
+		getline(cin, depart);
+
+		sql::PreparedStatement* stmt = conn->prepareStatement("SELECT SName FROM Student WHERE Department = ?");
+		stmt->setString(1, depart);
+		sql::ResultSet* res = stmt->executeQuery();
+		if (res) {
+			while (res->next()) {
+				cout << "Name: " << res->getString("SName") << endl;
+				cout << endl;
+			}
+		}
+		else {
+			cout << "No data found in the database." << endl;
+		}
+		cout << "Data displayed successfully" << endl;
+
+		delete res;
+		delete stmt;
+		delete conn;
+
+	}
+
+	// Display Enrolled Courses
+	void displayenrolledcourse()
+	{
+		sql::Connection* conn;
+		sql::Driver* driver;
+		driver = get_driver_instance();
+		conn = driver->connect(host, username, password);
+		if (!conn) {
+			cout << "Connection to the database failed." << endl;
+			return;
+		}
+		Sleep(3000);
+
+		cout << " To display Courses enrolled by student" << endl;
+		string name;
+		cout << endl;
+		cout << "Enter Student name: ";
+		cin.ignore();
+		getline(cin, name);
+
+		sql::PreparedStatement* stmt = conn->prepareStatement("SELECT Course FROM Student WHERE SName = ?");
+		stmt->setString(1, name);
+		sql::ResultSet* res = stmt->executeQuery();
+		if (res) {
+			while (res->next()) {
+				cout << "Course: " << res->getString("Course") << endl;
+				cout << endl;
+			}
+		}
+		else {
+			cout << "No data found in the database." << endl;
+		}
+		cout << "Data displayed successfully" << endl;
+
+		delete res;
+		delete stmt;
+		delete conn;
+	}
 	
 };
 
@@ -228,65 +541,321 @@ public:
 	{
 		return course;
 	}
-};
 
-// Making a courses class
-class courses 
-{
-private:
+	// Registration Function
+	void Registration() {
+		string R_username, R_password;
 
-	int CourseNo;
-	string Course, CourseInst,Department;
+		cout << endl;
+		cout << "Enter username: ";
+		cin >> R_username;
 
-public:
+		cout << "Enter password: ";
+		cin >> R_password;
 
-	courses ()
-	{
-		CourseNo = 0;
-		Course = "";
-		CourseInst = "";
-		Department = "";
+		fstream file("FacultyCredential.txt", ios::app);
+		if (!file.is_open()) {
+			cout << "Error: Unable to open file for writing.\n";
+		}
+
+		file << R_username << " " << R_password << endl;
+		file.close();
+
+		cout << "Registration successful!\n";
+
 	}
 
-	//Setters Function
+	// Login Function
+	void Login() {
+		string username, password;
+		string stored_username, stored_password;
+		bool found = false;
 
-	void Setcourseno(int id)
-	{
-		CourseNo = id;
-	}
-	void Setcourse(string name)
-	{
-		Course = name;
-	}
-	void SetcourseInst(string courseinst)
-	{
-		CourseInst = courseinst;
-	}
-	void Setdept(string dept)
-	{
-		Department = dept;
+		cout << endl;
+		cout << "Enter username: ";
+		cin >> username;
+
+		cout << "Enter password: ";
+		cin >> password;
+
+		fstream file("FacultyCredential.txt");
+		if (!file.is_open()) {
+			cerr << "Error: Unable to open file for reading.\n";
+
+		}
+
+		while (file >> stored_username >> stored_password) {
+			if (username == stored_username && password == stored_password) {
+				cout << "Logged In Successfully!\n";
+				found = true;
+				file.close();
+			}
+		}
+		if (!found)
+		{
+			cout << "Invalid username or password!\n";
+			Login();
+		}
+
+		file.close();
 	}
 
-	// Getters Function
+	// Displaying Student data
+	void displaystudentfromDatabase()
+	{
+		try {
+			sql::Connection* conn;
+			sql::Driver* driver;
+			driver = get_driver_instance();
+			conn = driver->connect(host, username, password);
+			if (!conn) {
+				cout << "Connection to the database failed." << endl;
+				return;
+			}
+			Sleep(3000);
+			cout << "Displaying data from database:" << endl;
+			sql::PreparedStatement* stmt = conn->prepareStatement("SELECT * FROM administration");
+			sql::ResultSet* res = stmt->executeQuery();
+			if (res) {
+				while (res->next()) {
+					cout << "Reg NO: " << res->getInt("RegNo") << endl;
+					cout << "Name: " << res->getString("SName") << endl;
+					cout << "Father Name: " << res->getString("FatherName") << endl;
+					cout << "Age: " << res->getInt("Age") << endl;
+					cout << "Department: " << res->getString("Department") << endl;
+					cout << "Semester: " << res->getInt("Semester") << endl;
+					cout << "Section: " << res->getString("Section") << endl;
+					cout << "Grade: " << res->getString("Grade") << endl;
+					cout << "Course: " << res->getString("Course") << endl;
+					cout << "CGPA: " << res->getString("CGPA") << endl;
+					cout << endl;
+				}
+			}
+			else {
+				cout << "No data found in the database." << endl;
+			}
+			delete res;
+			delete stmt;
+			delete conn;
+			cout << "Records displayed successfully!" << endl;
+		}
+		catch (sql::SQLException& e) {
+			cout << "SQL Exception: " << e.what() << endl;
+		}
+		catch (std::runtime_error& e) {
+			cout << "Runtime Error: " << e.what() << endl;
+		}
 
-	int getcourseno(int id)
-	{
-		return id;
 	}
-	string getname(string cname)
-	{
-		return cname;
-	}
-	string getcourseinst(string courseinst)
-	{
-		return courseinst;
-	}
-	string getdept(string dept)
-	{
-		return  dept;
-	}
-};
 
+	// Displaying Faculty data
+	void displayfacultyfromDatabase()
+	{
+		try {
+			sql::Connection* conn;
+			sql::Driver* driver;
+			driver = get_driver_instance();
+			conn = driver->connect(host, username, password);
+			if (!conn) {
+				cout << "Connection to the database failed." << endl;
+				return;
+			}
+			Sleep(3000);
+			cout << "Displaying data from database:" << endl;
+			sql::PreparedStatement* stmt = conn->prepareStatement("SELECT * FROM faculty");
+			sql::ResultSet* res = stmt->executeQuery();
+			if (res) {
+				while (res->next()) {
+					cout << "ID: " << res->getInt("ID") << endl;
+					cout << "Faculty Name: " << res->getString("FName") << endl;
+					cout << "Age: " << res->getInt("Age") << endl;
+					cout << "Designation: " << res->getString("Designation") << endl;
+					cout << "Department: " << res->getString("Department") << endl;
+					cout << "Course Name: " << res->getString("Course") << endl;
+					cout << "Salary: " << res->getInt("Salary") << endl;
+					cout << endl;
+				}
+			}
+			else {
+				cout << "No data found in the database." << endl;
+			}
+			delete res;
+			delete stmt;
+			delete conn;
+			cout << "Records displayed successfully!" << endl;
+		}
+		catch (sql::SQLException& e) {
+			cout << "SQL Exception: " << e.what() << endl;
+		}
+		catch (std::runtime_error& e) {
+			cout << "Runtime Error: " << e.what() << endl;
+		}
+
+	}
+
+	// Displaying Courses Data
+	void displaycoursefromDatabase()
+	{
+		try {
+			sql::Connection* conn;
+			sql::Driver* driver;
+			driver = get_driver_instance();
+			conn = driver->connect(host, username, password);
+			if (!conn) {
+				cout << "Connection to the database failed." << endl;
+				return;
+			}
+			Sleep(3000);
+			cout << "Displaying data from database:" << endl;
+			sql::PreparedStatement* stmt = conn->prepareStatement("SELECT * FROM Courses");
+			sql::ResultSet* res = stmt->executeQuery();
+			if (res) {
+				while (res->next()) {
+					cout << "Course No: " << res->getInt("CourseNo") << endl;
+					cout << "Course Name: " << res->getString("Course") << endl;
+					cout << "Course Instructor: " << res->getInt("CourseInstr") << endl;
+					cout << "Department: " << res->getString("Department") << endl;
+					cout << endl;
+				}
+			}
+			else {
+				cout << "No data found in the database." << endl;
+			}
+			delete res;
+			delete stmt;
+			delete conn;
+			cout << "Records displayed successfully!" << endl;
+		}
+		catch (sql::SQLException& e) {
+			cout << "SQL Exception: " << e.what() << endl;
+		}
+		catch (std::runtime_error& e) {
+			cout << "Runtime Error: " << e.what() << endl;
+		}
+
+	}
+	//Filter students with grades
+	void filterbyGrade()
+	{
+			sql::Connection* conn;
+			sql::Driver* driver;
+			driver = get_driver_instance();
+			conn = driver->connect(host, username, password);
+			if (!conn) {
+				cout << "Connection to the database failed." << endl;
+				return;
+			}
+			Sleep(3000);
+
+			cout << " To display Name filtered by Grade " << endl;
+			string grade;
+			cout << endl;
+			cout << "Enter Grade (only alphabet): ";
+			cin.ignore();
+			getline(cin, grade);
+
+			sql::PreparedStatement* stmt = conn->prepareStatement("SELECT SName FROM Student WHERE Grade = ?");
+			stmt->setString(1, grade);
+			sql::ResultSet* res = stmt->executeQuery();
+			if (res) {
+				while (res->next()) {
+					cout << endl;
+					cout << "Name: " << res->getString("SName") << endl;
+					cout << endl;
+				}
+			}
+			else {
+				cout << "No data found in the database." << endl;
+			}
+			cout << "Data displayed successfully" << endl;
+
+			delete res;
+			delete stmt;
+			delete conn;
+
+	}
+
+	//Filter students with courses
+	void filterbyCourse()
+	{
+		sql::Connection* conn;
+		sql::Driver* driver;
+		driver = get_driver_instance();
+		conn = driver->connect(host, username, password);
+		if (!conn) {
+			cout << "Connection to the database failed." << endl;
+			return;
+		}
+		Sleep(3000);
+
+		cout << " To display Name filtered by Course (BS..) " << endl;
+		string course;
+		cout << endl;
+		cout << "Enter Course Name: ";
+		cin.ignore();
+		getline(cin, course);
+
+		sql::PreparedStatement* stmt = conn->prepareStatement("SELECT SName FROM Student WHERE Course = ?");
+		stmt->setString(1, course);
+		sql::ResultSet* res = stmt->executeQuery();
+		if (res) {
+			while (res->next()) {
+				cout << endl;
+				cout << "Name: " << res->getString("SName") << endl;
+				cout << endl;
+			}
+		}
+		else {
+			cout << "No data found in the database." << endl;
+		}
+		cout << "Data displayed successfully" << endl;
+
+		delete res;
+		delete stmt;
+		delete conn;
+	}
+
+	//Filter faculty with courses
+	void filterInstructorbydepart()
+	{
+		sql::Connection* conn;
+		sql::Driver* driver;
+		driver = get_driver_instance();
+		conn = driver->connect(host, username, password);
+		if (!conn) {
+			cout << "Connection to the database failed." << endl;
+			return;
+		}
+		Sleep(3000);
+
+		cout << " To display Instructor Name filtered by Department " << endl;
+		string depart;
+		cout << endl;
+		cout << "Enter Department Name: ";
+		cin.ignore();
+		getline(cin, depart);
+
+		sql::PreparedStatement* stmt = conn->prepareStatement("SELECT FName FROM Faculty WHERE Department = ?");
+		stmt->setString(1, depart);
+		sql::ResultSet* res = stmt->executeQuery();
+		if (res) {
+			while (res->next()) {
+				cout << endl;
+				cout << "Name: " << res->getString("AName") << endl;
+				cout << endl;
+			}
+		}
+		else {
+			cout << "No data found in the database." << endl;
+		}
+		cout << "Data displayed successfully" << endl;
+
+		delete res;
+		delete stmt;
+		delete conn;
+
+	}
+};	
 //Making an administration class
 class administration 
 {
@@ -1689,7 +2258,8 @@ public:
 // Main Menu
 int main()
 {
-	try {
+	try 
+	{
 		
 		sql::Driver* driver;
 		sql::Connection* conn;
@@ -1707,20 +2277,26 @@ int main()
 	}
 	Sleep(3000);
 	}
-	catch (sql::SQLException& e) {
+	catch (sql::SQLException& e)
+	{
 		cout << "SQL Exception: " << e.what() << endl;
 	}
-	catch (std::runtime_error& e) {
+	catch (std::runtime_error& e)
+	{
 		cout << "Runtime Error: " << e.what() << endl;
 	}
 		
 	administration admin;
+	faculty fac;
+	student std;
+
 	bool Exit = false;
 	int option;
 
 	while (!Exit)
 	{
 		// Main menu
+
 	MainMenu:
 		system("cls");
 		cout << "\n\t\t WELCOME TO UNIVERSITY MANAGEMENT SYSTEM\n";
@@ -1739,7 +2315,6 @@ int main()
 		Sleep(3000);
 
 		// For admin
-
 		if (option == 1)
 		{	
 			int val;
@@ -1874,7 +2449,17 @@ int main()
 
 				else if (opt == 6)
 				{
-					goto MainMenu;
+					char val;
+					do
+					{
+						cout << endl;
+						admin.updatedtudentIntoDatabase();
+						cout << "You want to update any other data?";
+						cin >> val;
+						system("cls");
+					} while (val == 'Y' || val == 'y');
+
+					goto ADMIN;
 				}
 
 				else if (opt == 7)
@@ -1918,7 +2503,17 @@ int main()
 
 				else if (opt == 10)
 				{
-					goto MainMenu;
+					char val;
+					do
+					{
+						cout << endl;
+						admin.updatefacultyIntoDatabase();
+						cout << "You want to update any other data?";
+						cin >> val;
+						system("cls");
+					} while (val == 'Y' || val == 'y');
+
+					goto ADMIN;
 				}
 
 				else if (opt == 11)
@@ -1957,12 +2552,22 @@ int main()
 						system("cls");
 					} while (val == 'Y' || val == 'y');
 
-					goto ADMINL;
+					goto ADMIN;
 				}
 
 				else if (opt == 14)
 				{
-					goto MainMenu;
+					char val;
+					do
+					{
+						cout << endl;
+						admin.updatecourseIntoDatabase();
+						cout << "You want to update any other data?";
+						cin >> val;
+						system("cls");
+					} while (val == 'Y' || val == 'y');
+
+					goto ADMIN;
 				}
 
 				else if (opt == 15)
@@ -2143,7 +2748,7 @@ int main()
 				else if (opt == 8)
 				{
 					cout << endl;
-					admin.displayfromDatabase();
+					admin.displaystudentfromDatabase();
 					Sleep(3000);
 					system("cls");
 					goto ADMINL;
@@ -2283,13 +2888,610 @@ int main()
 		// For faculty
 		else if (option == 2)
 		{
+			int val;
+
+			system("cls");
+
+			cout << endl;
+			cout << "1. Register" << endl;
+			cout << "2. Login" << endl;
+			cout << "3. Main Menu" << endl;
+			cout << "4. Exit" << endl;
+
+			cout << "\nEnter your choice: ";
+			cin >> val;
+
+			cout << endl;
+			cout << "Wait, while we are processing......";
+			Sleep(3000);
+			system("cls");
+
+			// After Registration
+			if (val == 1)
+			{
+				cout << endl;
+				cout << "To Register enter your username and password" << endl;
+
+				fac.Registration();
+
+				cout << endl;
+				cout << "Wait, while we are processing......";
+				Sleep(3000);
+				system("cls");
+
+				int opt;
+			Faculty:
+
+				cout << endl;
+
+				cout << "1. Display Students" << endl;
+				cout << "2. Display Faculty" << endl;
+				cout << "3. Display Courses" << endl;
+				cout << "4. Filter students with grades" << endl;
+				cout << "5. Filter students with courses" << endl;
+				cout << "6. Filter faculty with Department" << endl;
+				cout << "7. Main menu" << endl;
+				cout << "8. Exit" << endl;
+
+				cout << "\nEnter your choice: ";
+				cin >> opt;
+
+				cout << endl;
+				cout << "Wait, while we are processing......";
+				Sleep(3000);
+				system("cls");
+
+				if (opt == 1)
+				{
+					char val;
+					do
+					{
+						cout << endl;
+						fac.displaystudentfromDatabase();
+						Sleep(3000);
+						cout << "You want to Continue?";
+						cin >> val;
+						system("cls");
+					} while (val == 'Y' || val == 'y');
+					goto Faculty;
+				}
+
+				else if (opt == 2)
+				{
+					char val;
+					do
+					{
+						cout << endl;
+						fac.displayfacultyfromDatabase();
+						Sleep(3000);
+						cout << "You want to Continue?";
+						cin >> val;
+						system("cls");
+					} while (val == 'Y' || val == 'y');
+					goto Faculty;
+
+				}
+				else if (opt == 3)
+				{
+					char val;
+					do
+					{
+						cout << endl;
+						fac.displayfacultyfromDatabase();
+						Sleep(3000);
+						cout << "You want to Continue?";
+						cin >> val;
+						system("cls");
+					} while (val == 'Y' || val == 'y');
+					goto Faculty;
+
+				}
+				else if (opt == 4)
+				{
+					char val;
+					do
+					{
+						cout << endl;
+						fac.filterbyGrade();
+						Sleep(3000);
+						cout << "Do you want to repeat?";
+						cin >> val;
+						system("cls");
+					} while (val == 'Y' || val == 'y');
+					goto FacultyL;
+				}
+				else if (opt == 5)
+				{
+					char val;
+					do
+					{
+						cout << endl;
+						fac.filterbyCourse();
+						Sleep(3000);
+						cout << "Do you want to repeat?";
+						cin >> val;
+						system("cls");
+					} while (val == 'Y' || val == 'y');
+					goto FacultyL;
+				}
+				else if (opt == 6)
+				{
+					char val;
+					do
+					{
+						cout << endl;
+						fac.filterInstructorbydepart();
+						Sleep(3000);
+						cout << "Do you want to repeat?";
+						cin >> val;
+						system("cls");
+					} while (val == 'Y' || val == 'y');
+					goto FacultyL;
+				}
+				else if (opt == 7)
+				{
+					goto MainMenu;
+				}
+				else
+				{
+					exit(0);
+				}
+			}
+
+			// After Login
+			else if (val == 2)
+			{
+				cout << endl;
+				cout << "To Login enter your username and password" << endl;
+
+				fac.Login();
+
+				cout << endl;
+				cout << "Wait, while we are processing......";
+				Sleep(3000);
+				system("cls");
+
+			FacultyL:
+
+				int opt;
+				cout << endl;
+
+				cout << "1. Display Students" << endl;
+				cout << "2. Display Faculty" << endl;
+				cout << "3. Display Courses" << endl;
+				cout << "4. Filter students with courses" << endl;
+				cout << "5. Filter students with grades" << endl;
+				cout << "6. Filter faculty with Department" << endl;
+				cout << "7. Main menu" << endl;
+				cout << "8. Exit" << endl;
+
+				cout << "\nEnter your choice: ";
+				cin >> opt;
+
+				cout << endl;
+				cout << "Wait, while we are processing......";
+				Sleep(3000);
+				system("cls");
+
+
+				if (opt == 1)
+				{
+					char val;
+					do
+					{
+						cout << endl;
+						fac.displaystudentfromDatabase();
+						Sleep(3000);
+						cout << "You want to Continue?";
+						cin >> val;
+						system("cls");
+					} while (val == 'Y' || val == 'y');
+					goto FacultyL;
+				}
+
+				else if (opt == 2)
+				{
+					char val;
+					do
+					{
+						cout << endl;
+						fac.displayfacultyfromDatabase();
+						Sleep(3000);
+						cout << "You want to Continue?";
+						cin >> val;
+						system("cls");
+					} while (val == 'Y' || val == 'y');
+					goto FacultyL;
+
+				}
+
+				else if (opt == 3)
+				{
+					char val;
+					do
+					{
+						cout << endl;
+						fac.displaycoursefromDatabase();
+						Sleep(3000);
+						cout << "You want to Continue?";
+						cin >> val;
+						system("cls");
+					} while (val == 'Y' || val == 'y');
+					goto FacultyL;
+
+				}
+
+				else if (opt == 4)
+				{
+					char val;
+					do
+					{
+						cout << endl;
+						fac.filterbyGrade();
+						Sleep(3000);
+						cout << "Do you want to repeat?";
+						cin >> val;
+						system("cls");
+					} while (val == 'Y' || val == 'y');
+					goto FacultyL;
+				}
+				else if (opt == 5)
+				{
+					char val;
+					do
+					{
+						cout << endl;
+						fac.filterbyCourse();
+						Sleep(3000);
+						cout << "Do you want to repeat?";
+						cin >> val;
+						system("cls");
+					} while (val == 'Y' || val == 'y');
+					goto FacultyL;
+				}
+				else if (opt == 6)
+				{
+					char val;
+					do
+					{
+						cout << endl;
+						fac.filterInstructorbydepart();
+						Sleep(3000);
+						cout << "Do you want to repeat?";
+						cin >> val;
+						system("cls");
+					} while (val == 'Y' || val == 'y');
+					goto FacultyL;
+				}
+				else if (opt == 7)
+				{
+					goto MainMenu;
+				}
+
+				else
+				{
+					exit(0);
+				}
+
+			}
+
+			// Main Menu
+			else if (val == 3)
+			{
+				goto MainMenu;
+			}
+
+			else
+			{
+				exit(0);
+			}
 
 		}
 
 		// For student
 		else if (option == 3)
 		{
+			int val;
 
+			system("cls");
+
+			cout << endl;
+			cout << "1. Register" << endl;
+			cout << "2. Login" << endl;
+			cout << "3. Main Menu" << endl;
+			cout << "4. Exit" << endl;
+
+			cout << "\nEnter your choice: ";
+			cin >> val;
+
+			cout << endl;
+			cout << "Wait, while we are processing......";
+			Sleep(3000);
+			system("cls");
+
+			// After Registration
+			if (val == 1)
+			{
+				cout << endl;
+				cout << "To Register enter your username and password" << endl;
+
+				std.Registration();
+
+				cout << endl;
+				cout << "Wait, while we are processing......";
+				Sleep(3000);
+				system("cls");
+
+				int opt;
+
+			Student:
+
+				cout << endl;
+
+				cout << "1. Display Students" << endl;
+				cout << "2. Display Faculty" << endl;
+				cout << "3. Display Courses" << endl;
+				cout << "4. Filter by Grades" << endl;
+				cout << "5. Filter by Department" << endl;
+				cout << "6. Display Enrolled courses" << endl;
+				cout << "7. Main menu" << endl;
+				cout << "8. Exit" << endl;
+
+				cout << "\nEnter your choice: ";
+				cin >> opt;
+
+				cout << endl;
+				cout << "Wait, while we are processing......";
+				Sleep(3000);
+				system("cls");
+
+				if (opt == 1)
+				{
+					char val;
+					do
+					{
+						cout << endl;
+						std.displaystudentfromDatabase();
+						Sleep(3000);
+						cout << "Do you want to repeat?";
+						cin >> val;
+						system("cls");
+					} while (val == 'Y' || val == 'y');
+					goto Student;
+				}
+
+				else if (opt == 2)
+				{
+					char val;
+					do
+					{
+						cout << endl;
+						std.displayfacultyfromDatabase();
+						Sleep(3000);
+						cout << "Do you want to repeat?";
+						cin >> val;
+						system("cls");
+					} while (val == 'Y' || val == 'y');
+					goto Student;
+
+				}
+				else if (opt == 3)
+				{
+
+					char val;
+					do
+					{
+						cout << endl;
+						std.displaycoursefromDatabase();
+						Sleep(3000);
+						cout << "Do you want to repeat?";
+						cin >> val;
+						system("cls");
+					} while (val == 'Y' || val == 'y');
+					goto Student;
+
+				}
+				else if (opt == 4)
+				{
+					char val;
+					do
+					{
+						cout << endl;
+						std.displayGrades();
+						Sleep(3000);
+						cout << "Do you want to repeat?";
+						cin >> val;
+						system("cls");
+					} while (val == 'Y' || val == 'y');
+					goto Student;
+				}
+				else if (opt == 5)
+				{
+					char val;
+					do
+					{
+						cout << endl;
+						std.filterbyDepartment();
+						Sleep(3000);
+						cout << "Do you want to repeat?";
+						cin >> val;
+						system("cls");
+					} while (val == 'Y' || val == 'y');
+					goto Student;
+				}
+				else if (opt == 6)
+				{
+					char val;
+					do
+					{
+						cout << endl;
+						std.displayenrolledcourse();
+						Sleep(3000);
+						cout << "Do you want to repeat?";
+						cin >> val;
+						system("cls");
+					} while (val == 'Y' || val == 'y');
+					goto Student;
+				}
+				else if (opt == 7)
+				{
+					goto MainMenu;
+				}
+
+				else
+				{
+					exit(0);
+				}
+			}
+
+			// After Login
+			else if (val == 2)
+			{
+				cout << endl;
+				cout << "To Login enter your username and password" << endl;
+
+				std.Login();
+
+				cout << endl;
+				cout << "Wait, while we are processing......";
+				Sleep(3000);
+				system("cls");
+
+			StudentL:
+
+				int opt;
+				cout << endl;
+
+				cout << "1. Display Students" << endl;
+				cout << "2. Display Faculty" << endl;
+				cout << "3. Display Courses" << endl;
+				cout << "4. Filter by Grades" << endl;
+				cout << "5. Filter by Department" << endl;
+				cout << "6. Display Enrolled courses" << endl;
+				cout << "7. Main menu" << endl;
+				cout << "8. Exit" << endl;
+
+				cout << "\nEnter your choice: ";
+				cin >> opt;
+
+				cout << endl;
+				cout << "Wait, while we are processing......";
+				Sleep(3000);
+				system("cls");
+
+
+				if (opt == 1)
+				{
+					char val;
+					do
+					{
+						cout << endl;
+						std.displaystudentfromDatabase();
+						Sleep(3000);
+						cout << "Do you want to repeat?";
+						cin >> val;
+						system("cls");
+					} while (val == 'Y' || val == 'y');
+					goto StudentL;
+
+				}
+
+				else if (opt == 2)
+				{
+					char val;
+					do
+					{
+						cout << endl;
+						std.displayfacultyfromDatabase();
+						Sleep(3000);
+						cout << "Do you want to repeat?";
+						cin >> val;
+						system("cls");
+					} while (val == 'Y' || val == 'y');
+					goto StudentL;
+
+				}
+
+				else if (opt == 3)
+				{
+					char val;
+					do
+					{
+						cout << endl;
+						std.displaycoursefromDatabase();
+						Sleep(3000);
+						cout << "Do you want to repeat?";
+						cin >> val;
+						system("cls");
+					} while (val == 'Y' || val == 'y');
+					goto StudentL;
+
+				}
+
+				else if (opt == 4)
+				{
+					char val;
+					do
+					{
+						cout << endl;
+						std.displayGrades();
+						Sleep(3000);
+						cout << "Do you want to repeat?";
+						cin >> val;
+						system("cls");
+					} while (val == 'Y' || val == 'y');
+					goto StudentL;
+				}
+				else if (opt == 5)
+				{
+					char val;
+					do
+					{
+						cout << endl;
+						std.filterbyDepartment();
+						Sleep(3000);
+						cout << "Do you want to repeat?";
+						cin >> val;
+						system("cls");
+					} while (val == 'Y' || val == 'y');
+					goto StudentL;
+				}
+				else if (opt == 6)
+				{
+					char val;
+					do
+					{
+						cout << endl;
+						std.displayenrolledcourse();
+						Sleep(3000);
+						cout << "Do you want to repeat?";
+						cin >> val;
+						system("cls");
+					} while (val == 'Y' || val == 'y');
+					goto StudentL;
+				}
+				else if (opt == 7)
+				{
+					goto MainMenu;
+				}
+
+				else
+				{
+					exit(0);
+				}
+
+			}
+
+			// Main Menu
+			else if (val == 3)
+			{
+				goto MainMenu;
+			}
+
+			else
+			{
+				exit(0);
+			}
 		}
 
 		// To exit
@@ -2301,5 +3503,5 @@ int main()
 		Exit = true;
 
 	}
-	  return 0;	
+	 return 0;	
 }	
