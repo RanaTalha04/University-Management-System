@@ -31,7 +31,7 @@ The University Management System is a software application designed to streamlin
 - **Login**: Registered administrators can log in using their username and password for access to administrative functionalities.
 - **Database Operations**:
   - **Display**: View all administrative staff, students, faculty record and courses stored in the database.
-  - 
+  
 ## Getting Started
 
 ### Prerequisites
