@@ -48,10 +48,13 @@ CREATE TABLE COURSES (
     PRIMARY KEY (CourseNo)
 );
 
-DROP TABLE student;
-DROP TABLE faculty;
-DROP TABLE courses;
-DROP TABLE administration;
+CREATE VIEW student_view AS
+SELECT RegNo,FName,Age,CGPA,Semester
+FROM student;
+
+CREATE VIEW faculty_view AS
+SELECT ID,FName,Age,Designation
+FROM faculty;
 
 SELECT * FROM administration;
 SELECT * FROM faculty;
