@@ -17,14 +17,21 @@ The University Management System is a software application designed to streamlin
   - **Remove**: Delete administrative staff records from the database based on their ID and name.
   - **Display**: View all administrative staff records stored in the database.
 
-### Faculty (Not Implemented)
+### Faculty
 
-- **Login**: Faculty members can log in using their credentials to access relevant functionalities.
+- **Registration**: Administrators can register new accounts by providing a username and password. User credentials are stored securely in a text file.
+- **Login**: Registered administrators can log in using their username and password for access to administrative functionalities.
+- **Database Operations**:
+  - **Display**: View all administrative staff, students, faculty record and courses stored in the database.
 
-### Student (Not Implemented)
 
-- **Login**: Students can log in to the system to access their academic records and perform other tasks.
+### Student
 
+- **Registration**: Administrators can register new accounts by providing a username and password. User credentials are stored securely in a text file.
+- **Login**: Registered administrators can log in using their username and password for access to administrative functionalities.
+- **Database Operations**:
+  - **Display**: View all administrative staff, students, faculty record and courses stored in the database.
+  - 
 ## Getting Started
 
 ### Prerequisites
